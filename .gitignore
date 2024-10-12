@@ -1,0 +1,64 @@
+# General OS files
+.DS_Store
+Thumbs.db
+
+# CMake build files
+/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# Output binaries and libraries
+*.obj
+*.o
+*.lo
+*.la
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# IDE-specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# Dependency and package management
+conanbuildinfo.cmake
+conanbuildinfo.txt
+_conan/
+conan.lock
+*.cmake.user
+
+# Generated config files
+/*Config.cmake
+/*ConfigVersion.cmake
+/*Targets.cmake
+/*Targets-*.cmake
+
+# Ignore cache or temporary files
+*.swp
+*.swo
+*~
+
+# Ignore generated documentation (e.g., Doxygen)
+docs/html/
+docs/latex/
+*.log
+*.aux
+*.toc
+*.pdf
+
+# Ignore coverage and profiling files
+*.gcda
+*.gcno
+*.gcov
+
+# Ignore binaries from tests
+/tests/*.out
+/tests/*.log
