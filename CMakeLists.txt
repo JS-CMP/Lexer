@@ -61,3 +61,29 @@ export(EXPORT ${PROJECT_NAME}Targets
         FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake"
         NAMESPACE ${PROJECT_NAME}::
 )
+
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+file(GLOB_RECURSE SOURCES_TEST CONFIGURE_DEPENDS
+        "tests/*.cpp"
+)
+
+add_executable(${PROJECT_NAME}_test ${SOURCES_TEST})
+
+target_link_libraries(${PROJECT_NAME}_test
+        PRIVATE
+        gtest
+        gtest_main
+        ${PROJECT_NAME}
+)
+
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME}_test)

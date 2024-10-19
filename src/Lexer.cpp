@@ -10,6 +10,14 @@ Lexer::Lexer::Lexer(std::string &content)
 {
 }
 
+Lexer::Lexer::Lexer(const char *content)
+    : content(content),
+      cursor(0),
+      line(0),
+      start_of_line(0)
+{
+}
+
 std::vector<Lexer::Token> Lexer::Lexer::tokenize()
 {
     std::vector<Token> tokens;
