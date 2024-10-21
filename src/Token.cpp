@@ -1,6 +1,7 @@
 #include "../include/Token.hpp"
 
 #include <utility>
+#include <iostream>
 
 Lexer::Token::Token()
     : value(),

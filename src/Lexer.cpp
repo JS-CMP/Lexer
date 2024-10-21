@@ -44,7 +44,6 @@ Lexer::Token Lexer::Lexer::nextToken()
     if (this->cursor >= this->content.size())
         return Token(TK_EOS);
     char ch = this->content[this->cursor];
-
     if (ch == '\n' || ch == ';') {
         while (this->cursor < this->content.size() && (
             this->content[this->cursor] == '\n' || this->content[this->cursor] == ';')) {
@@ -86,7 +85,7 @@ Lexer::Token Lexer::Lexer::nextToken()
     if (isdigit(ch) || (ch == '.' && isdigit(this->content[this->cursor + 1]))) {
         std::string value;
         while (this->cursor < this->content.size() &&
-            isalnum(this->content[this->cursor]) || this->content[this->cursor] == '-') {
+            isalnum(this->content[this->cursor]) || this->content[this->cursor] == '-' || this->content[this->cursor] == '.') {
             value += this->content[this->cursor];
             this->cursor++;
         }
