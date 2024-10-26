@@ -9,8 +9,9 @@ namespace Lexer {
         for (size_t i = 0; i < function.args.size(); i++) {
             os << TypeNames[function.args[i].type] << " "
                 << function.args[i].name;
-            if (i < function.args.size() - 1)
+            if (i < function.args.size() - 1) {
                 os << ", ";
+            }
         }
         os << ") {";
         os << function.body;

@@ -4,6 +4,7 @@
 #include <vector>
 #include "./Token.hpp"
 #include <iostream>
+#include <array>
 
 namespace Lexer {
     enum Types {
@@ -27,7 +28,7 @@ namespace Lexer {
         JS_NUM_TYPES
     };
 
-    static const char *TypeNames[] = {
+    static const std::array<const char*, JS_NUM_TYPES> TypeNames = {
         "JS::Any &",
         "JS::Primitive &",
         "JS::Number &",
@@ -57,8 +58,7 @@ namespace Lexer {
 
     class Program {
     public:
-        Program(std::vector<Token> &tokens);
-        ~Program() = default;
+        explicit Program(std::vector<Token> &tokens);
 
         void parse();
         void parse_func(size_t &i, Function &func);

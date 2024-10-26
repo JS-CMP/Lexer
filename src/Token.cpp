@@ -45,8 +45,9 @@ bool Lexer::Token::isSymbol(char ch)
 bool Lexer::Token::isAlpha(const std::string &str)
 {
     for (char ch: str) {
-        if (!isalpha(ch))
+        if (!isalpha(ch)) {
             return false;
+        }
     }
     return true;
 }
@@ -54,10 +55,12 @@ bool Lexer::Token::isAlpha(const std::string &str)
 Lexer::TokenType Lexer::Token::isKeyword(const std::string &str)
 {
     for (int i = TK_QUAD_OP_LAST + 1; i < TK_NUMBER; i++) {
-        if (TokenValue[i] == nullptr)
+        if (TokenValue[i] == nullptr) {
             continue;
-        if (str == TokenValue[i])
+        }
+        if (str == TokenValue[i]) {
             return static_cast<TokenType>(i);
+        }
     }
     return TK_NOT_FOUND;
 }

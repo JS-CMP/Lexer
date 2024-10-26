@@ -7,9 +7,8 @@
 namespace Lexer {
     class Lexer {
     public:
-        Lexer(std::string &content);
-        Lexer(const char *content);
-        ~Lexer() = default;
+        explicit Lexer(std::string &content);
+        explicit Lexer(const char *content);
 
         std::vector<Token> tokenize();
         Token nextToken();

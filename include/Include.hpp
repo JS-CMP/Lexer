@@ -6,7 +6,7 @@
 
 class Include {
 public:
-    Include(std::string path);
+    explicit Include(std::string path);
 
     std::string path;
 

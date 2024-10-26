@@ -6,8 +6,9 @@ namespace Lexer {
     {
         size_t i = 0;
         bool ret = false;
-        while (body.value[i].type == TK_SEMICOLON)
+        while (body.value[i].type == TK_SEMICOLON) {
             i++;
+        }
         for (; i < body.value.size(); i++) {
             Types type;
 
@@ -66,13 +67,15 @@ namespace Lexer {
             default:
                 if (body.value[i].type != TK_EOL &&
                     body.value[i].type != TK_SEMICOLON &&
-                    (i + 1 < body.value.size() && !ret))
+                    (i + 1 < body.value.size() && !ret)) {
                     ret = false;
+                }
                 os << body.value[i].value;
             }
         }
-        if (!ret && body.no_return)
+        if (!ret && body.no_return) {
             os << "return JS::Any();";
+        }
         return os;
     }
 }
