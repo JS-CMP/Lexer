@@ -80,18 +80,20 @@ void Lexer::Program::include(
     os << std::endl;
 }
 
-std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Program &program)
-{
-    Lexer::Program::include(os, program);
-    Lexer::Program::function_declaration(os, program);
+namespace Lexer {
+    std::ostream &operator<<(std::ostream &os, const Program &program)
+    {
+        Program::include(os, program);
+        Program::function_declaration(os, program);
 
-    Function main = program.functions.back();
-    for (const auto &function: program.functions) {
-        if (function.name == "main")
-            continue;
-        os << function;
+        Function main = program.functions.back();
+        for (const auto &function: program.functions) {
+            if (function.name == "main")
+                continue;
+            os << function;
+        }
+        os << main;
+        return os;
     }
-    os << main;
-    return os;
 }
 
