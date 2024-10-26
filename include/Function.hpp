@@ -18,7 +18,7 @@ namespace Lexer {
         std::string name;
         std::vector<arg> args;
         Body body;
-        Types return_type = JS_ANY_REF;
+        Types return_type = JS_ANY;
 
         friend std::ostream &operator<<(std::ostream &os, const Function &function);
     };

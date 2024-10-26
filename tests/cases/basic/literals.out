@@ -1,0 +1,4 @@
+#include "types/JsAny.hpp"
+#include "class/Console.hpp"
+
+int main() {JS::Any a=JS::Any();JS::Any b=JS::Any(nullptr);JS::Any c=JS::Any(true);JS::Any d=JS::Any(false);JS::Any e=JS::Any(0);JS::Any f=JS::Any(1);JS::Any g=JS::Any(1.1);JS::Any h=JS::Any("a");JS::Any i=JS::Any("");JS::Any v=JS::Any("a");JS::Any w=JS::Any("");}

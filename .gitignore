@@ -9,6 +9,9 @@ CMakeCache.txt
 cmake_install.cmake
 Makefile
 install_manifest.txt
+Testing
+cmake-build-debug
+
 
 # Output binaries and libraries
 *.obj
@@ -21,7 +24,6 @@ install_manifest.txt
 *.dylib
 *.dll
 *.exe
-*.out
 
 # IDE-specific files
 .vscode/
@@ -34,12 +36,16 @@ conanbuildinfo.txt
 _conan/
 conan.lock
 *.cmake.user
+_deps
+.cmake
 
 # Generated config files
 /*Config.cmake
 /*ConfigVersion.cmake
 /*Targets.cmake
 /*Targets-*.cmake
+/*.cmake
+/CTestTestfile.cmake
 
 # Ignore cache or temporary files
 *.swp
@@ -59,6 +65,8 @@ docs/latex/
 *.gcno
 *.gcov
 
+
 # Ignore binaries from tests
-/tests/*.out
+/tests/**/*.tmp
 /tests/*.log
+JS_CMP_LEXER_test

@@ -1,0 +1,7 @@
+#include "types/JsAny.hpp"
+#include "class/Console.hpp"
+
+JS::Any a();
+
+JS::Any a() {return JS::Any();}
+int main() {a()}

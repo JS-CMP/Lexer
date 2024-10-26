@@ -23,13 +23,11 @@ std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Body &body)
             break;
         case TK_NULL_LITERAL:
             type = JS_ANY;
-            os << TypeNames[type] << " " << body.value[i + 1].value
-                << body.value[i + 2].value << TypeNames[type] << "(nullptr)";
+            os << TypeNames[type] << "(nullptr)";
             break;
         case TK_UNDEFINED_LITERAL:
             type = JS_ANY;
-            os << TypeNames[type] << " " << body.value[i + 1].value
-                << body.value[i + 2].value << TypeNames[type] << "()";
+            os << TypeNames[type] << "()";
             break;
         case TK_PERIOD:
             os << "::";
@@ -37,43 +35,17 @@ std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Body &body)
         case TK_CONST:
             os << "const ";
         case TK_LET:
+            type = JS_ANY; // TODO: change to check further the type of the variable
+            os << TypeNames[type] << " ";
+            break;
         case TK_VAR:
-            if (i + 3 > body.value.size())
-                throw std::runtime_error("the JavaScript code contain a feature that is not yet implemented.");
-            switch (body.value[i + 3].type) {
-            case TK_TRUE_LITERAL:
-            case TK_FALSE_LITERAL:
-            case TK_NUMBER:
-                type = JS_ANY;
-                os << TypeNames[type] << " " << body.value[i + 1].value
-                    << body.value[i + 2].value << TypeNames[type] << "("
-                    << body.value[i + 3].value << ")";
-                break;
-            case TK_STRING:
-                type = JS_ANY;
-                os << TypeNames[type] << " " << body.value[i + 1].value
-                    << body.value[i + 2].value << TypeNames[type] << "(\""
-                    << body.value[i + 3].value << "\")";
-                break;
-            case TK_NULL_LITERAL:
-                type = JS_ANY;
-                os << TypeNames[type] << " " << body.value[i + 1].value
-                    << body.value[i + 2].value << TypeNames[type]
-                    << "(nullptr)";
-                break;
-            case TK_UNDEFINED_LITERAL:
-                i += 1;
-            default:
-                type = JS_ANY;
-                os << TypeNames[type] << " " << body.value[i + 1].value
-                    << body.value[i + 2].value << TypeNames[type] << "()";
-                i-= 2;
-                break;
-            }
-            i += 3;
+            // TODO: add the variable to the list of variables that is outof the scope
+            type = JS_ANY; // TODO: change to check further the type of the variable
+            os << TypeNames[type] << " ";
             break;
         case TK_RETURN:
             ret = true;
+            os << "return ";
             if (i + 1 > body.value.size()) {
                 throw std::runtime_error(
                     "the JavaScript code contain a feature that is not yet implemented.");
@@ -81,17 +53,18 @@ std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Body &body)
             switch (body.value[i + 1].type) {
             case TK_EOL:
             case TK_SEMICOLON:
-                os << "return JS::Any();";
-                i++;
+                type = JS_ANY;
+                os << TypeNames[type] << "();";
                 break;
             default:
                 break;
             }
+            break;
         default:
+            if (body.value[i].type != TK_EOL && body.value[i].type != TK_SEMICOLON && (i + 1 < body.value.size() && !ret))
+                ret = false;
             os << body.value[i].value;
         }
-        if (Token::isKeyword(body.value[i].value) != TK_NOT_FOUND)
-            os << " ";
     }
     if (!ret && body.no_return)
         os << "return JS::Any();";

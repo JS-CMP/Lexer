@@ -3,6 +3,7 @@
 Lexer::Program::Program(std::vector<Token> &tokens)
     : tokens(tokens)
 {
+    // TODO make this dynamic to include only the necessary files
     this->includes.emplace_back("types/JsAny.hpp");
     this->includes.emplace_back("class/Console.hpp");
 }
@@ -49,11 +50,41 @@ void Lexer::Program::parse_func(size_t &i, Lexer::Function &func)
     i+= 2;
 }
 
-std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Program &program)
+void Lexer::Program::function_declaration(
+    std::ostream &os, const Lexer::Program &program
+)
+{
+    if (program.functions.size() <= 1)
+        return;
+    for (const auto &function: program.functions) {
+        if (function.name == "main")
+            continue;
+        os << TypeNames[function.return_type] << " " << function.name << "(";
+        for (size_t i = 0; i < function.args.size(); i++) {
+            os << TypeNames[function.args[i].type];
+            if (i + 1 < function.args.size())
+                os << ", ";
+        }
+        os << ");" << std::endl;
+    }
+    os << std::endl;
+}
+
+void Lexer::Program::include(
+    std::ostream &os, const Lexer::Program &program
+)
 {
     for (const auto &include: program.includes) {
-        os << include << std::endl;
+        os << include;
     }
+    os << std::endl;
+}
+
+std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Program &program)
+{
+    Lexer::Program::include(os, program);
+    Lexer::Program::function_declaration(os, program);
+
     Function main = program.functions.back();
     for (const auto &function: program.functions) {
         if (function.name == "main")
@@ -63,3 +94,4 @@ std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Program &program)
     os << main;
     return os;
 }
+
