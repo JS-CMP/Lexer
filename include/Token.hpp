@@ -2,6 +2,7 @@
 #define TOKEN_HPP
 
 #include <string>
+#include <array>
 
 namespace Lexer {
 
@@ -123,7 +124,7 @@ namespace Lexer {
         TK_NUM_TOKENS       // number of tokens
     };
 
-    static const char *TokenValue[TokenType::TK_NUM_TOKENS] = {
+    static const std::array<const char*, TokenType::TK_NUM_TOKENS> TokenValue = {
         nullptr,            // EOS
         nullptr,            // ILLEGAL
         nullptr,            // SIMPLE OP FIRST
@@ -228,7 +229,7 @@ namespace Lexer {
         nullptr             // NOT FOUND
     };
 
-    static const char *TokenName[TokenType::TK_NUM_TOKENS] = {
+    static const std::array<const char*, TokenType::TK_NUM_TOKENS> TokenName = {
         "TK_EOS",
         "TK_ILLEGAL",
         "TK_SIMPLE_OP_FIRST",
@@ -340,7 +341,6 @@ namespace Lexer {
         Token();
         explicit Token(TokenType type);
         Token(std::string value, TokenType type, unsigned long line, unsigned long column);
-        ~Token() = default;
 
         static bool isSkippable(char ch);
         static bool isSymbolStart(char ch);

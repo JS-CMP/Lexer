@@ -23,8 +23,9 @@ std::vector<Lexer::Token> Lexer::Lexer::tokenize()
     std::vector<Token> tokens;
     while (!this->content.empty()) {
         Token token = this->nextToken();
-        if (token.type == TK_EOS)
+        if (token.type == TK_EOS) {
             break;
+        }
         tokens.push_back(token);
     }
     return tokens;
@@ -41,8 +42,9 @@ void Lexer::Lexer::leftTrim()
 Lexer::Token Lexer::Lexer::nextToken()
 {
     this->leftTrim();
-    if (this->cursor >= this->content.size())
+    if (this->cursor >= this->content.size()) {
         return Token(TK_EOS);
+    }
     char ch = this->content[this->cursor];
     if (ch == '\n' || ch == ';') {
         while (this->cursor < this->content.size() && (
@@ -77,8 +79,12 @@ Lexer::Token Lexer::Lexer::nextToken()
         }
         if (Token::isAlpha(value)) {
             TokenType type = Token::isKeyword(value);
-            if (type != TK_NOT_FOUND)
-                return {value, type, this->line, (this->start_of_line - this->cursor) - value.size()};
+            if (type != TK_NOT_FOUND) {
+                return {
+                    value, type, this->line,
+                    (this->start_of_line - this->cursor) - value.size()
+                };
+            }
             return {value, TK_IDENTIFIER, this->line, (this->start_of_line - this->cursor) - value.size()};
         }
     }
@@ -93,8 +99,9 @@ Lexer::Token Lexer::Lexer::nextToken()
     }
 
     for (size_t i = TK_QUAD_OP_LAST; i > TK_SIMPLE_OP_FIRST ; i--) {
-        if (TokenValue[i] == nullptr)
+        if (TokenValue[i] == nullptr) {
             continue;
+        }
         if (this->content.compare(this->cursor, strlen(TokenValue[i]), TokenValue[i]) == 0) {
             this->cursor += strlen(TokenValue[i]);
             return {TokenValue[i], static_cast<TokenType>(i), this->line, (this->start_of_line - this->cursor) - strlen(TokenValue[i])};

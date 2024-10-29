@@ -22,8 +22,12 @@ void Lexer::Program::parse()
             while (nb_brace != 0) {
                 func.body.value.push_back(this->tokens[i]);
                 i++;
-                if (this->tokens[i].type == TK_RBRACE) nb_brace--;
-                if (this->tokens[i].type == TK_LBRACE) nb_brace++;
+                if (this->tokens[i].type == TK_RBRACE) {
+                    nb_brace--;
+                }
+                if (this->tokens[i].type == TK_LBRACE) {
+                    nb_brace++;
+                }
             }
             this->functions.push_back(func);
         } else {
@@ -54,16 +58,19 @@ void Lexer::Program::function_declaration(
     std::ostream &os, const Lexer::Program &program
 )
 {
-    if (program.functions.size() <= 1)
+    if (program.functions.size() <= 1) {
         return;
+    }
     for (const auto &function: program.functions) {
-        if (function.name == "main")
+        if (function.name == "main") {
             continue;
+        }
         os << TypeNames[function.return_type] << " " << function.name << "(";
         for (size_t i = 0; i < function.args.size(); i++) {
             os << TypeNames[function.args[i].type];
-            if (i + 1 < function.args.size())
+            if (i + 1 < function.args.size()) {
                 os << ", ";
+            }
         }
         os << ");" << std::endl;
     }
@@ -80,18 +87,21 @@ void Lexer::Program::include(
     os << std::endl;
 }
 
-std::ostream &Lexer::operator<<(std::ostream &os, const Lexer::Program &program)
-{
-    Lexer::Program::include(os, program);
-    Lexer::Program::function_declaration(os, program);
+namespace Lexer {
+    std::ostream &operator<<(std::ostream &os, const Program &program)
+    {
+        Program::include(os, program);
+        Program::function_declaration(os, program);
 
-    Function main = program.functions.back();
-    for (const auto &function: program.functions) {
-        if (function.name == "main")
-            continue;
-        os << function;
+        Function main = program.functions.back();
+        for (const auto &function: program.functions) {
+            if (function.name == "main") {
+                continue;
+            }
+            os << function;
+        }
+        os << main;
+        return os;
     }
-    os << main;
-    return os;
 }
 
