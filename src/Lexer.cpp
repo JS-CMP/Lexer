@@ -46,14 +46,19 @@ Lexer::Token Lexer::Lexer::nextToken()
         return Token(TK_EOS);
     }
     char ch = this->content[this->cursor];
-    if (ch == '\n' || ch == ';') {
+    if (ch == ';') {
+        this->cursor++;
+        return {std::string(1, ch), TK_SEMICOLON, this->line, (this->start_of_line - this->cursor) - 1};
+    }
+
+    if (ch == '\n') {
         while (this->cursor < this->content.size() && (
-            this->content[this->cursor] == '\n' || this->content[this->cursor] == ';')) {
+            this->content[this->cursor] == '\n')) {
             this->cursor++;
             this->line++;
             this->start_of_line = this->cursor;
         }
-        return {std::string(";"), TK_SEMICOLON, this->line, (this->start_of_line - this->cursor) - 1};
+        return {std::string(1, ch), TK_EOL, this->line, (this->start_of_line - this->cursor) - 1};
     }
 
     if (ch == '\'' || ch == '"') {
@@ -90,8 +95,8 @@ Lexer::Token Lexer::Lexer::nextToken()
     }
     if (isdigit(ch) || (ch == '.' && isdigit(this->content[this->cursor + 1]))) {
         std::string value;
-        while (this->cursor < this->content.size() &&
-            isalnum(this->content[this->cursor]) || this->content[this->cursor] == '-' || this->content[this->cursor] == '.') {
+        while ((this->cursor < this->content.size() &&
+            isalnum(this->content[this->cursor])) || this->content[this->cursor] == '-' || this->content[this->cursor] == '.') {
             value += this->content[this->cursor];
             this->cursor++;
         }

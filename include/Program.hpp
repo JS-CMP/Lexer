@@ -1,55 +1,11 @@
 #ifndef PROGRAM_HPP
 #define PROGRAM_HPP
 
-#include <vector>
 #include "./Token.hpp"
+
+#include <vector>
 #include <iostream>
 #include <array>
-
-namespace Lexer {
-    enum Types {
-        JS_ANY_REF = 0,
-        JS_PRIMITIVE_REF,
-        JS_NUMBER_REF,
-        JS_STRING_REF,
-        JS_BOOLEAN_REF,
-        JS_NULL_REF,
-        JS_UNDEFINED_REF,
-        JS_OBJECT_REF,
-        JS_ANY,
-        JS_PRIMITIVE,
-        JS_NUMBER,
-        JS_STRING,
-        JS_BOOLEAN,
-        JS_NULL,
-        JS_UNDEFINED,
-        JS_OBJECT,
-        INT,
-        JS_NUM_TYPES
-    };
-
-    static const std::array<const char*, JS_NUM_TYPES> TypeNames = {
-        "JS::Any &",
-        "JS::Primitive &",
-        "JS::Number &",
-        "JS::String &",
-        "JS::Boolean &",
-        "JS::Null &",
-        "JS::Undefined &",
-        "JS::Object &",
-        "JS::Any",
-        "JS::Primitive",
-        "JS::Number",
-        "JS::String",
-        "JS::Boolean",
-        "JS::Null",
-        "JS::Undefined",
-        "JS::Object",
-        "int"
-    };
-
-    class Function;
-}
 
 #include "Function.hpp"
 #include "Include.hpp"

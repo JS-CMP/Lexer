@@ -5,5 +5,5 @@ JS::Any b(JS::Any);
 JS::Any a(JS::Any);
 
 JS::Any b(JS::Any depth) {a(depth);return JS::Any();}
-JS::Any a(JS::Any depth) {if(depth==JS::Any(0)){;console::log(JS::Any("depth is 0"));return JS::Any(0);};return b(depth-JS::Any(1));}
+JS::Any a(JS::Any depth) {if(depth==JS::Any(0)){console::log(JS::Any("depth is 0"));return JS::Any(0);};return b(depth-JS::Any(1));}
 int main() {a(JS::Any(3));}
