@@ -3,7 +3,6 @@ project(JS_CMP_LEXER VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-error=unused-variable -Wextra -Werror -pedantic")
 
 include_directories(include)
 
