@@ -13,7 +13,7 @@ void Lexer::Program::parse()
     Function main;
     main.name = "main";
     main.return_type = INT;
-    main.body.no_return = false;
+    main.body.no_return = true;
     for (size_t i = 0; i < this->tokens.size(); i++) {
         if (this->tokens[i].type == TK_FUNCTION) {
             Function func;

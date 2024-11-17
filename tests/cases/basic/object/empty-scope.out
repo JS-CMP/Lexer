@@ -1,0 +1,4 @@
+#include "types/JsAny.hpp"
+#include "class/Console.hpp"
+
+int main() {JS::Any a=JS::Any("Hello");if (a==JS::Any("Hello")){}else if (a==JS::Any("Hello")){}else {};for (JS::Any v=JS::Any(0);v<JS::Any(10);v++){};while (JS::Any(false)){};do {}while (JS::Any(false));try {}catch (){}finally {};switch (a){};}

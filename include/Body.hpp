@@ -19,7 +19,7 @@ namespace Lexer {
         friend std::ostream &operator<<(std::ostream &os, const Body &body);
 
         std::vector<Token> value;
-        bool no_return = true;
+        bool no_return = false;
 
     };
 }
