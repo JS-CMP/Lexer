@@ -66,6 +66,9 @@ namespace Lexer {
                     os << body.value[i].value;
             }
         }
+        if (size > 0 && body.value[size - 1].type != TK_SEMICOLON && body.value[size - 1].type != TK_EOL) {
+            os << ";";
+        }
         if (!ret && body.no_return) {
             os << "return JS::Any();";
         }
@@ -92,10 +95,13 @@ namespace Lexer {
                 type = JS_ANY;
                 os << TypeNames[type] << "()";
                 return true;
+            case TK_LBRACE:
+                return Body::transpileObject(body, size, type, os, i);
+            case TK_LBRACK:
+                return Body::transpileArray(body, size, type, os, i);
             default:
-                break;
+                return false;
         }
-        return Body::transpileObject(body, size, type, os, i);
     }
 
     bool Body::transpileObject(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i) {
@@ -127,14 +133,12 @@ namespace Lexer {
         // { "key": "value", "key2": 2 }
         // example of transpiled object
         // JS::Object({{"key", "value"}, {"key2", 2}})
-        i = start - 1;
+        i = start;
         while (i + 1 < size && body.value[i].type != TK_RBRACE) {
             os << "{";
             i = eraseEol(body, size, i);
             switch (body.value[i].type) {
                 case TK_STRING:
-                    os << "\"" << body.value[i].value << "\"";
-                    break;
                 case TK_IDENTIFIER:
                     os << "\"" << body.value[i].value << "\"";
                     break;
@@ -160,12 +164,41 @@ namespace Lexer {
             if (i < size && body.value[i].type == TK_COMMA) {
                 os << ",";
                 i++;
+                i = eraseEol(body, size, i);
             }
-            i = eraseEol(body, size, i);
         }
         os << "})";
         return true;
     }
+
+    bool Body::transpileArray(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i) {
+        if (body.value[i].type != TK_LBRACK ||
+            (size > 0 && (body.value[i - 1].type == TK_IDENTIFIER ||
+            body.value[i - 1].type == TK_STRING || body.value[i - 1].type == TK_RPAREN))) {
+            return false;
+        }
+        type = JS_ANY;
+        os << TypeNames[type] << "(" << "JS::Array({";
+        i++;
+        i = eraseEol(body, size, i);
+        while (i < size && body.value[i].type != TK_RBRACK) {
+            if (i < size && body.value[i].type == TK_IDENTIFIER) {
+                os << body.value[i].value;
+            } else if (i < size && !encapsulate(body, size, type, os, i)) {
+                return false;
+            }
+            i = eraseEol(body, size, i);
+            i++;
+            if (i < size && body.value[i].type == TK_COMMA) {
+                os << ", ";
+                i++;
+            }
+            i = eraseEol(body, size, i);
+        }
+        os << "}))";
+        return true;
+    }
+
 
     size_t Body::eraseEol(const Body &body, size_t size, size_t &i) {
         while (i < size && body.value[i].type == TK_EOL) i++;

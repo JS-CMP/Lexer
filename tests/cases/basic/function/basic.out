@@ -4,4 +4,4 @@
 JS::Any a();
 
 JS::Any a() {return JS::Any();}
-int main() {a()}
+int main() {a();}

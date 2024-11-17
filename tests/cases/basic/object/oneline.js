@@ -1,0 +1,1 @@
+const object = { key: 'value' };

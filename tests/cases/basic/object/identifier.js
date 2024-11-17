@@ -1,4 +1,4 @@
 const a = "Hello";
 const object = {
-    a: a,
+    a: a
 }
