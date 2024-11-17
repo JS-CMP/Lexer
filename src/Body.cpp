@@ -15,8 +15,11 @@ namespace Lexer {
                 continue;
             }
             switch (body.value[i].type) {
-                case TK_PERIOD:
-                    os << "::";
+                case TK_PERIOD: // TODO: adding handle of ? eg...
+                    if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
+                        os << "[\"" << body.value[i + 1].value << "\"]";
+                        i++;
+                    }
                     break;
                 case TK_CONST:
                     os << "const ";
