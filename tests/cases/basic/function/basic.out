@@ -1,5 +1,5 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "class/Console/Console.hpp"
 
 JS::Any a();
 

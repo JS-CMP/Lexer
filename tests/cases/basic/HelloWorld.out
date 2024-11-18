@@ -1,4 +1,4 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "class/Console/Console.hpp"
 
 int main() {console::log(JS::Any("Hello World!"));}
