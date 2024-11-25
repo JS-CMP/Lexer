@@ -4,6 +4,7 @@ namespace Lexer {
     std::ostream &operator<<(std::ostream &os, const Body &body) {
         size_t i = 0;
         bool ret = false;
+        bool wait_for_scope = false;
         while (body.value[i].type == TK_EOL) {
             i++;
         }
@@ -11,6 +12,13 @@ namespace Lexer {
         for (; i < size; i++) {
             Types type;
 
+            if (body.value[i].type > TK_FIRST_SCOPED && body.value[i].type < TK_LAST_SCOPED) {
+                os << body.value[i].value << " "; // TODO: rework for nested function
+                wait_for_scope = true;
+                continue;
+            }
+
+            Body::encapsulate_scope(body, wait_for_scope, size, os, i);
             if (Body::encapsulate(body, size, type, os, i)) {
                 continue;
             }
@@ -58,7 +66,7 @@ namespace Lexer {
                     }
                     break;
                 default:
-                    if (body.value[i].type != TK_EOL &&
+                    if (!body.no_return && body.value[i].type != TK_EOL &&
                         (body.value[i].type != TK_SEMICOLON && body.value[i].type != TK_EOL) &&
                         (i + 1 < size && !ret)) {
                         ret = false;
@@ -66,10 +74,32 @@ namespace Lexer {
                     os << body.value[i].value;
             }
         }
-        if (!ret && body.no_return) {
+        if (!ret && !body.no_return) {
             os << "return JS::Any();";
         }
         return os;
+    }
+
+    void Body::encapsulate_scope(const Body &body, bool wait_for_scope, size_t size, std::ostream &os, size_t &i) {
+        if (wait_for_scope && body.value[i].type == TK_LBRACE) {
+            os << "{";
+            size_t j = i;
+            size_t scope_size = 1;
+            while (j < size && scope_size != 0) {
+                j++;
+                if (body.value[j].type == TK_LBRACE) {
+                    scope_size++;
+                } else if (body.value[j].type == TK_RBRACE) {
+                    scope_size--;
+                }
+            }
+            Body b;
+            b.value = std::vector<Token>(body.value.begin() + i + 1, body.value.begin() + j);
+            b.no_return = true;
+            os << b;
+            i = j;
+            wait_for_scope = false;
+        }
     }
 
     bool Body::encapsulate(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i) {
