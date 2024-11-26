@@ -1,0 +1,4 @@
+#include "types/JsAny.hpp"
+#include "class/Console.hpp"
+
+int main() {const JS::Any a=JS::Any("Hello");const JS::Any array=JS::Any(JS::Array({a}));}
