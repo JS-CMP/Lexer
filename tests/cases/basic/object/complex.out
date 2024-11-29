@@ -1,4 +1,4 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "class/Console/Console.hpp"
 
 int main() {const JS::Any person=JS::Any(JS::Object({{"firstName", JS::Any("John")},{"lastName", JS::Any("Doe")},{"age", JS::Any(30)},{"address", JS::Any(JS::Object({{"street", JS::Any("123 Main St")},{"city", JS::Any("Anytown")},{"state", JS::Any("CA")},{"zipCode", JS::Any("12345")}})},{"contactInfo", JS::Any(JS::Object({{"email", JS::Any("john.doe@example.com")},{"phone", JS::Any("555-123-4567")}})},{"isEmployed", JS::Any(true)},{"job", JS::Any(JS::Object({{"title", JS::Any("Software Engineer")},{"company", JS::Any("TechCorp")},{"location", JS::Any(JS::Object({{"city", JS::Any("Silicon Valley")},{"state", JS::Any("CA")}})}})},{"socialMedia", JS::Any(JS::Object({{"twitter", JS::Any("@johndoe")},{"linkedin", JS::Any("linkedin.com/in/johndoe")}})}});}
