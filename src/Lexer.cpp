@@ -46,22 +46,23 @@ Lexer::Token Lexer::Lexer::nextToken()
         return Token(TK_EOS);
     }
     char ch = this->content[this->cursor];
+
     if (ch == '/' && this->content[this->cursor + 1] == '/') {
         this->cursor += 2;
-        while (this->cursor < this->content.size() && this->content[this->cursor] != '\n') {
+        while (this->content[this->cursor] != '\n') {
             this->cursor++;
         }
-//        return {std::string("//"), TK_COMMENT, this->line, (this->start_of_line - this->cursor) - 2};
+        return {std::string(1, ch), TK_EOL, this->line, (this->start_of_line - this->cursor) - 2};
     }
     if (ch == '/' && this->content[this->cursor + 1] == '*') {
         this->cursor += 2;
-        while (this->cursor < this->content.size() &&
-               (this->content[this->cursor] != '*' || this->content[this->cursor + 1] != '/')) {
+        while (this->content[this->cursor] != '*' || this->content[this->cursor + 1] != '/') {
             this->cursor++;
         }
         this->cursor += 2;
-//        return {std::string("/*"), TK_COMMENT, this->line, (this->start_of_line - this->cursor) - 2};
+        return {std::string(1, ch), TK_EOL, this->line, (this->start_of_line - this->cursor) - 2};
     }
+
     if (ch == ';') {
         this->cursor++;
         return {std::string(1, ch), TK_SEMICOLON, this->line, (this->start_of_line - this->cursor) - 1};
