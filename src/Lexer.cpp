@@ -85,6 +85,9 @@ Lexer::Token Lexer::Lexer::nextToken()
         while (this->cursor < this->content.size() &&
             (this->content[this->cursor] != ch || backslash % 2 != 0)) {
             backslash = (this->content[this->cursor] == '\\' ? backslash + 1 : 0);
+            if (this->content[this->cursor] == '\'' || this->content[this->cursor] == '"') {
+                value += '\\';
+            }
             value += this->content[this->cursor];
             this->cursor++;
         }
