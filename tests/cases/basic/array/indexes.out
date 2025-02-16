@@ -1,4 +1,5 @@
 #include "types/JsAny.hpp"
 #include "class/Console.hpp"
+#include "types/objects/Types.hpp"
 
-int main() {const JS::Any array=JS::Any(JS::Array({JS::Any(1), JS::Any(2), JS::Any(3)}));const JS::Any b=JS::Any(JS::Array({JS::Any(1)}));array[JS::Any(1)]=JS::Any(4);array[b[JS::Any(0)]]=JS::Any(5);((array))[JS::Any(2)]=JS::Any(6);}
+int main() {JS::Any array=JS::Any(JS::Array({JS::Any(1), JS::Any(2), JS::Any(3)}));JS::Any b=JS::Any(JS::Array({JS::Any(1)}));array[JS::Any(1)]=JS::Any(4);array[b[JS::Any(0)]]=JS::Any(5);((array))[JS::Any(2)]=JS::Any(6);}

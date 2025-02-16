@@ -1,0 +1,5 @@
+#include "types/JsAny.hpp"
+#include "class/Console.hpp"
+#include "types/objects/Types.hpp"
+
+int main() {JS::Any a=JS::Any(10);JS::Any("a += 5; // Not supported by the lib");JS::Any("a -= 3; // Not supported by the lib");JS::Any("a *= 2; // Not supported by the lib");JS::Any("a /= 4; // Not supported by the lib");JS::Any("a %= 3; // Not supported by the lib");console::log(a);}

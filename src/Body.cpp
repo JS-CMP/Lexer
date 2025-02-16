@@ -158,7 +158,7 @@ namespace Lexer {
             return false;
         }
         type = JS_ANY;
-        os << TypeNames[type] << "(" << "JS::Object({"; //TODO: remove JS::Object if possible
+        os << TypeNames[type] << "(JS::Object({"; //TODO: remove JS::Object if possible
         // example of object
         // { "key": "value", "key2": 2 }
         // example of transpiled object
@@ -197,7 +197,7 @@ namespace Lexer {
                 i = eraseEol(body, size, i);
             }
         }
-        os << "})";
+        os << "}))";
         return true;
     }
 

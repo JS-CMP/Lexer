@@ -1,4 +1,4 @@
-const complexArray = [
+var complexArray = [
     {
         name: "John",
         age: 30,
