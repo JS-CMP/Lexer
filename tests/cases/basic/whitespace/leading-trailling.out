@@ -2,4 +2,4 @@
 #include "class/Console.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any a=JS::Any(10);;;;;;console::log(a);}
+int main() {JS::Any x=JS::Any(5);}
