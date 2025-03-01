@@ -1,5 +1,5 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
 int main() {JS::Any i=JS::Any(0);while (i<JS::Any(5)){i++;};}

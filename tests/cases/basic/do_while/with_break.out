@@ -1,5 +1,5 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {do {console::log(JS::Any("Loop running"));break;}while (JS::Any(true));}
+int main() {do {console["log"](JS::Any("Loop running"));break;}while (JS::Any(true));}

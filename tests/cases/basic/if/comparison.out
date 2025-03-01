@@ -1,5 +1,5 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any a=JS::Any(10);if (a>JS::Any(5)){console::log(JS::Any("Greater than 5"));};}
+int main() {JS::Any a=JS::Any(10);if (a>JS::Any(5)){console["log"](JS::Any("Greater than 5"));};}

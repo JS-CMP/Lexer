@@ -5,7 +5,7 @@ Lexer::Program::Program(std::vector<Token> &tokens)
 {
     // TODO make this dynamic to include only the necessary files
     this->includes.emplace_back("types/JsAny.hpp");
-    this->includes.emplace_back("class/Console.hpp");
+    this->includes.emplace_back("global/global.hpp");
     this->includes.emplace_back("types/objects/Types.hpp");
 }
 

@@ -1,5 +1,5 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {if (JS::Any(false)){JS::Any("Intentionally left empty");}else {console::log(JS::Any("Only else block executes"));};}
+int main() {if (JS::Any(false)){JS::Any("Intentionally left empty");}else {console["log"](JS::Any("Only else block executes"));};}
