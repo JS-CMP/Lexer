@@ -1,0 +1,5 @@
+#include "types/JsAny.hpp"
+#include "class/Console.hpp"
+#include "types/objects/Types.hpp"
+
+int main() {do {console::log(JS::Any("Outer loop"));do {console::log(JS::Any("Inner loop"));}while (JS::Any(false));}while (JS::Any(false));}
