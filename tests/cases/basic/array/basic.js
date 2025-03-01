@@ -1,4 +1,4 @@
-const array = [
+var array = [
     undefined,
     null,
     true,

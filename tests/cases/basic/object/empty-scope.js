@@ -9,9 +9,5 @@ while (false) {
 }
 do {
 } while (false);
-try {
-} catch () {
-} finally {
-}
 switch (a) {
 }

@@ -1,2 +1,2 @@
-const a = "Hello";
-const array = [a];
+var a = "Hello";
+var array = [a];

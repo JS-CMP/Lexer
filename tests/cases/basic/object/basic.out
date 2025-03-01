@@ -1,4 +1,5 @@
 #include "types/JsAny.hpp"
 #include "class/Console.hpp"
+#include "types/objects/Types.hpp"
 
-int main() {const JS::Any object=JS::Any(JS::Object({{"a", JS::Any()},{"b", JS::Any(nullptr)},{"c", JS::Any(true)},{"d", JS::Any(false)},{"e", JS::Any(0)},{"f", JS::Any(1)},{"g", JS::Any(1.1)},{"h", JS::Any("a")},{"i", JS::Any("")},{"v", JS::Any("a")},{"w", JS::Any("")}});}
+int main() {JS::Any object=JS::Any(JS::Object({{"a", JS::Any()},{"b", JS::Any(nullptr)},{"c", JS::Any(true)},{"d", JS::Any(false)},{"e", JS::Any(0)},{"f", JS::Any(1)},{"g", JS::Any(1.1)},{"h", JS::Any("a")},{"i", JS::Any("")},{"v", JS::Any("a")},{"w", JS::Any("")}}));}

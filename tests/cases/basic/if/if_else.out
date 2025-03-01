@@ -1,0 +1,5 @@
+#include "types/JsAny.hpp"
+#include "class/Console.hpp"
+#include "types/objects/Types.hpp"
+
+int main() {if (JS::Any(false)){console::log(JS::Any("False block"));}else {console::log(JS::Any("Else block should run"));};}

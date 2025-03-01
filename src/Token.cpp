@@ -40,8 +40,6 @@ bool Lexer::Token::isSymbol(char ch)
     return isalnum(ch) || ch == '_';
 }
 
-
-
 bool Lexer::Token::isAlpha(const std::string &str)
 {
     for (char ch: str) {

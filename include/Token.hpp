@@ -34,6 +34,7 @@ namespace Lexer {
         TK_BIT_AND,         // &
         TK_BIT_OR,          // |
         TK_BIT_XOR,         // ^
+        TK_BIT_NOT,         // ~
         TK_ASSIGN,          // =
         TK_NOT,             // !
         TK_DOUBLE_QUOTE,    // "
@@ -152,6 +153,7 @@ namespace Lexer {
             "&",
             "|",
             "^",
+            "~",
             "=",
             "!",
             "\"",
