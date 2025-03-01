@@ -1,5 +1,5 @@
 #include "types/JsAny.hpp"
-#include "class/Console.hpp"
+#include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {if (JS::Any(true)){console::log(JS::Any("Outer if"));if (JS::Any(true)){console::log(JS::Any("Inner if should run"));};};}
+int main() {if (JS::Any(true)){console["log"](JS::Any("Outer if"));if (JS::Any(true)){console["log"](JS::Any("Inner if should run"));};};}
