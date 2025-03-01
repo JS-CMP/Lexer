@@ -6,6 +6,7 @@ Lexer::Program::Program(std::vector<Token> &tokens)
     // TODO make this dynamic to include only the necessary files
     this->includes.emplace_back("types/JsAny.hpp");
     this->includes.emplace_back("class/Console.hpp");
+    this->includes.emplace_back("types/objects/Types.hpp");
 }
 
 void Lexer::Program::parse()
@@ -13,7 +14,7 @@ void Lexer::Program::parse()
     Function main;
     main.name = "main";
     main.return_type = INT;
-    main.body.no_return = false;
+    main.body.no_return = true;
     for (size_t i = 0; i < this->tokens.size(); i++) {
         if (this->tokens[i].type == TK_FUNCTION) {
             Function func;

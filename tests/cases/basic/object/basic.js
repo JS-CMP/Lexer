@@ -1,4 +1,4 @@
-const object = {
+var object = {
     a: undefined,
     b: null,
     c: true,

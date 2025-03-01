@@ -1,4 +1,4 @@
-const a = "Hello";
-const object = {
-    a: a,
+var a = "Hello";
+var object = {
+    a: a
 }

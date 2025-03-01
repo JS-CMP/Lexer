@@ -34,6 +34,7 @@ namespace Lexer {
         TK_BIT_AND,         // &
         TK_BIT_OR,          // |
         TK_BIT_XOR,         // ^
+        TK_BIT_NOT,         // ~
         TK_ASSIGN,          // =
         TK_NOT,             // !
         TK_DOUBLE_QUOTE,    // "
@@ -76,29 +77,32 @@ namespace Lexer {
 
         TK_DELETE,          // delete
         TK_TYPEOF,          // typeof
+        TK_DEBUGGER,        // debugger
         TK_INSTANCEOF,      // instanceof
         TK_VOID,            // void
         TK_BREAK,           // break
-        TK_CASE,            // case
-        TK_CATCH,           // catch
         TK_CONTINUE,        // continue
-        TK_DEBUGGER,        // debugger
+        TK_CASE,            // case
+        TK_IN,              // in
+        TK_NEW,             // new
+        TK_THIS,            // this
+        TK_THROW,           // throw
+        TK_WITH,            // with
+        TK_CLASS,           // class
+        TK_RETURN,          // return
+        TK_FIRST_SCOPED,    // FIRST SCOPED
+        TK_CATCH,           // catch
         TK_DO,              // do
         TK_ELSE,            // else
         TK_FINALLY,         // finaly
         TK_FOR,             // for
         TK_FUNCTION,        // function
         TK_IF,              // if
-        TK_IN,              // in
-        TK_NEW,             // new
-        TK_RETURN,          // return
         TK_SWITCH,          // switch
-        TK_THIS,            // this
-        TK_THROW,           // throw
         TK_TRY,             // try
         TK_WHILE,           // while
-        TK_WITH,            // with
-        TK_CLASS,           // class
+        TK_LAST_SCOPED,     // LAST SCOPED
+
 
         TK_STRICT_FIRST,    // STRICT FIRST
         TK_VAR,             // var
@@ -149,6 +153,7 @@ namespace Lexer {
             "&",
             "|",
             "^",
+            "~",
             "=",
             "!",
             "\"",
@@ -191,29 +196,31 @@ namespace Lexer {
             "delete",
             "typeof",
             "instanceof",
+            "debugger",
             "void",
             "break",
-            "case",
-            "catch",
             "continue",
-            "debugger",
+            "case",
+            "in",
+            "new",
+            "this",
+            "throw",
+            "with",
+            "class",
+            "return",
+            nullptr, // First Scoped
+            "catch",
             "do",
             "else",
             "finally",
             "for",
             "function",
             "if",
-            "in",
-            "new",
-            "return",
             "switch",
-            "this",
-            "throw",
             "try",
             "while",
-            "with",
-            "class", // STRICT FIRST
-            nullptr,
+            nullptr, // Last Scoped
+            nullptr,// STRICT FIRST
             "var",
             "const",
             "let",
