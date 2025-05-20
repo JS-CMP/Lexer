@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any i=JS::Any(0);while (i<JS::Any(3)){JS::Any j=JS::Any(0);while (j<JS::Any(2)){j++;};i++;};}
+int main() {JS::Any i;i=JS::Any(0);while (i<JS::Any(3)){JS::Any j;j=JS::Any(0);while (j<JS::Any(2)){j++;};i++;};}

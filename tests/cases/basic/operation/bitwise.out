@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any a=JS::Any(5)&JS::Any(3);JS::Any b=JS::Any(5)|JS::Any(3);JS::Any c=JS::Any(5)^JS::Any(3);JS::Any d=~JS::Any(5);JS::Any e=JS::Any(5)<<JS::Any(1);JS::Any f=JS::Any(5)>>JS::Any(1);;console["log"](a,b,c,d,e,f);}
+int main() {JS::Any a, b, c, d, e, f;a=JS::Any(5)&JS::Any(3);b=JS::Any(5)|JS::Any(3);c=JS::Any(5)^JS::Any(3);d=~JS::Any(5);e=JS::Any(5)<<JS::Any(1);f=JS::Any(5)>>JS::Any(1);;console["log"](a,b,c,d,e,f);}

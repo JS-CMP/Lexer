@@ -6,22 +6,25 @@
 #include <iostream>
 
 namespace Lexer {
-
     class Body {
     public:
         Body() = default;
+        explicit Body(const std::vector<Token> &tokens);
 
-        static bool encapsulate(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
-        static bool transpileObject(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
-        static bool transpileArray(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
+        void parse();
+
+        static bool encapsulate(const Body &body, size_t size, std::ostringstream &os, size_t &i);
+        static bool transpileBlocks(const Body& body, size_t size, std::ostringstream& os, size_t& i, const std::vector<std::tuple<TokenType, TokenType, bool>> &stack);
+        static bool transpileObject(const Body &body, size_t size, std::ostringstream &os, size_t &i);
+        static bool transpileArray(const Body &body, size_t size, std::ostringstream &os, size_t &i);
         static size_t eraseEol(const Body &body, size_t size, size_t &i);
-        static void encapsulate_scope(const Body &body, bool wait_for_scope, size_t size, std::ostream &os, size_t &i);
 
         friend std::ostream &operator<<(std::ostream &os, const Body &body);
 
         std::vector<Token> value;
-        bool no_return = false;
 
+        // before parse
+        std::vector<Function> functions;
     };
 }
 

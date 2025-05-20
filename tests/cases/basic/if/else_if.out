@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any b=JS::Any(15);if (b<JS::Any(10)){console["log"](JS::Any("Less than 10"));}else if (b<JS::Any(20)){console["log"](JS::Any("Between 10 and 20"));}else {console["log"](JS::Any("20 or greater"));};}
+int main() {JS::Any b;b=JS::Any(15);if (b<JS::Any(10)){console["log"](JS::Any("Less than 10"));}else if (b<JS::Any(20)){console["log"](JS::Any("Between 10 and 20"));}else {console["log"](JS::Any("20 or greater"));};}

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <array>
 
+#include "Body.hpp"
 #include "Function.hpp"
 #include "Include.hpp"
 
@@ -17,11 +18,6 @@ namespace Lexer {
         explicit Program(std::vector<Token> &tokens);
 
         void parse();
-        void parse_func(size_t &i, Function &func);
-
-        static void function_declaration(
-            std::ostream &os, const Program &program
-        );
 
         static void include(
             std::ostream &os, const Program &program
@@ -30,7 +26,7 @@ namespace Lexer {
         std::vector<Token> tokens;
 
         std::vector<Include> includes;
-        std::vector<Function> functions;
+        Body main;
 
         friend std::ostream &operator<<(
             std::ostream &os, const Program &program

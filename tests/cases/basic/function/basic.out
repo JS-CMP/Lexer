@@ -2,7 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-JS::Any a();
-
-JS::Any a() {return JS::Any();}
-int main() {a();}
+int main() {JS::Any a;a = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any();}));a();}
