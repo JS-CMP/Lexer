@@ -32,9 +32,6 @@ namespace Lexer {
     std::ostream &operator<<(std::ostream &os, const Program &program)
     {
         Program::include(os, program);
-        for (const auto &function : program.main.functions) {
-            std::cout << function.name << std::endl;
-        }
         os << "int main() {";
         os << program.main;
         os << "}" << std::endl;
