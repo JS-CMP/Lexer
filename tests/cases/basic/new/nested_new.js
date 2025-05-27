@@ -1,0 +1,8 @@
+function Foo() {
+    return function () {};
+}
+var x = 123;
+
+new new Foo(); // NEW(NEW(Foo))
+new (new Foo)(x); // NEW(NEW(Foo), x)
+new new Foo(x)(x); // NEW(NEW(Foo, x), x)

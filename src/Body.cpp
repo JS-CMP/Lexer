@@ -5,6 +5,12 @@ namespace Lexer {
         size_t i = 0;
         bool ret = false;
         bool wait_for_scope = false;
+        // Hotfix for empty body TODO try to remove it with new function handling
+        if (body.value.empty()) {
+            os << "return JS::Any();";
+            return os;
+        }
+
         while (body.value[i].type == TK_EOL) {
             i++;
         }
@@ -128,6 +134,8 @@ namespace Lexer {
                 type = JS_ANY;
                 os << TypeNames[type] << "()";
                 return true;
+            case TK_NEW:
+                return Body::transpileNew(body, size, type, os, i);
             case TK_LBRACE:
                 return Body::transpileObject(body, size, type, os, i);
             case TK_LBRACK:
@@ -135,6 +143,83 @@ namespace Lexer {
             default:
                 return false;
         }
+    }
+    bool Body::transpileNew(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i) {
+        if (body.value[i].type != TK_NEW) {
+            return false;
+        }
+
+        std::cout << "Transpiling NEW at index " << i << '\n';
+        os << "NEW(";
+        i++;
+        i = eraseEol(body, size, i);
+        if (body.value[i].type == TK_NEW) {
+            std
+            Body::encapsulate(body, size, type, os, i);
+            i++;
+            i = eraseEol(body, size, i);
+            std::cout << "Token : " << body.value[i].value << '\n';
+            while (i + 1 < size && body.value[i].type == TK_PERIOD && body.value[i + 1].type == TK_IDENTIFIER) {
+                os << "[\"" << body.value[i + 1].value << "\"]"; // TODO: rework with push tokens
+                i += 2;
+                i = eraseEol(body, size, i);
+            }
+        } else if (body.value[i].type == TK_IDENTIFIER) {
+            std::cout << "Identifier found: " << body.value[i].value << '\n';
+            os << body.value[i].value; // TODO: rework with push tokens
+            while (i + 2 < size && body.value[i + 1].type == TK_PERIOD &&
+                   body.value[i + 2].type == TK_IDENTIFIER) {
+                os << "[\"" << body.value[i + 2].value << "\"]"; // TODO: rework with push tokens
+                i += 2;
+            }
+            i++;
+        } else if (body.value[i].type == TK_LPAREN) {
+            size_t nb_parens = 1;
+            i++;
+            i = eraseEol(body, size, i);
+            os << "(";
+            while (i < size && nb_parens > 0) {
+                if (body.value[i].type == TK_LPAREN) {
+                    nb_parens++;
+                } else if (body.value[i].type == TK_RPAREN) {
+                    nb_parens--;
+                }
+                os << body.value[i].value; // TODO: rework with push tokens
+                i++;
+                i = eraseEol(body, size, i);
+            }
+        }
+        i = eraseEol(body, size, i);
+        if (body.value[i].type != TK_LPAREN) {
+            os << ")";
+            i--; // Move back to the last token
+            return true;
+        }
+        if (body.value[i].type == TK_LPAREN && i + 1 < size && body.value[i + 1].type == TK_RPAREN) {
+            os << ")";
+            i += 1; // Skip the parentheses
+            i = eraseEol(body, size, i);
+            return true;
+        }
+        os << ",";
+        i++;
+        i = eraseEol(body, size, i);
+        size_t nb_parens = 1;
+        while (i < size && nb_parens > 0) {
+            if (body.value[i].type == TK_LPAREN) {
+                nb_parens++;
+            } else if (body.value[i].type == TK_RPAREN) {
+                nb_parens--;
+            }
+            if (nb_parens > 0) {
+                os << body.value[i].value; // TODO: rework with push tokens
+            }
+            i++;
+            i = eraseEol(body, size, i);
+        }
+        i--;
+        os << ")";
+        return true;
     }
 
     bool Body::transpileObject(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i) {

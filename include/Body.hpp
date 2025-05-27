@@ -12,6 +12,7 @@ namespace Lexer {
         Body() = default;
 
         static bool encapsulate(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
+        static bool transpileNew(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
         static bool transpileObject(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
         static bool transpileArray(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
         static size_t eraseEol(const Body &body, size_t size, size_t &i);
