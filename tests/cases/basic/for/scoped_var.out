@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {for (JS::Any i=JS::Any(0);i<JS::Any(3);i++){JS::Any x=i*JS::Any(2);console["log"](x);};}
+int main() {for (JS::Any i=JS::Any(0);i<JS::Any(3);i++){JS::Any x;x=i*JS::Any(2);console["log"](x);};}

@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any c=JS::Any("/* not a real comment */");}
+int main() {JS::Any c;c=JS::Any("/* not a real comment */");}

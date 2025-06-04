@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any x=JS::Any(5);JS::Any y=JS::Any(10);}
+int main() {JS::Any x, y;x=JS::Any(5);y=JS::Any(10);}

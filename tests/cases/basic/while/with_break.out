@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any i=JS::Any(0);while (JS::Any(true)){if (i>=JS::Any(3)){break;};i++;};}
+int main() {JS::Any i;i=JS::Any(0);while (JS::Any(true)){if (i>=JS::Any(3)){break;};i++;};}
