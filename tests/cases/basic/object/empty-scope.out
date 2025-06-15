@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any a=JS::Any("Hello");if (a==JS::Any("Hello")){}else if (a==JS::Any("Hello")){}else {};for (JS::Any v=JS::Any(0);v<JS::Any(10);v++){};while (JS::Any(false)){};do {}while (JS::Any(false));switch (a){};}
+int main() {JS::Any a;a=JS::Any("Hello");if (a==JS::Any("Hello")){}else if (a==JS::Any("Hello")){}else {};for (JS::Any v=JS::Any(0);v<JS::Any(10);v++){};while (JS::Any(false)){};do {}while (JS::Any(false));;}

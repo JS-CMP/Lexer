@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any obj=JS::Any(JS::Object({{"key", JS::Any("value")}}));JS::Any arr=JS::Any(JS::Array({JS::Any(1), JS::Any(2), JS::Any(3)}));}
+int main() {JS::Any obj, arr;obj=JS::Any(JS::Object({{"key", JS::Any("value")}}));arr=JS::Any(JS::Array({JS::Any(1), JS::Any(2), JS::Any(3)}));}

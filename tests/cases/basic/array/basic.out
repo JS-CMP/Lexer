@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any array=JS::Any(JS::Array({JS::Any(), JS::Any(nullptr), JS::Any(true), JS::Any(false), JS::Any(0), JS::Any(1), JS::Any(1.1), JS::Any("a"), JS::Any(""), JS::Any("a"), JS::Any("")}));}
+int main() {JS::Any array;array=JS::Any(JS::Array({JS::Any(), JS::Any(nullptr), JS::Any(true), JS::Any(false), JS::Any(0), JS::Any(1), JS::Any(1.1), JS::Any("a"), JS::Any(""), JS::Any("a"), JS::Any("")}));}

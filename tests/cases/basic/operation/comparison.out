@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any a=JS::Any(5)==JS::Any("5");JS::Any b=JS::Any(5)!=JS::Any("5");JS::Any c=JS::Any(5)>JS::Any(3);JS::Any d=JS::Any(5)<JS::Any(3);;;console["log"](a,b,c,d);}
+int main() {JS::Any a, b, c, d;a=JS::Any(5)==JS::Any("5");b=JS::Any(5)!=JS::Any("5");c=JS::Any(5)>JS::Any(3);d=JS::Any(5)<JS::Any(3);;;console["log"](a,b,c,d);}

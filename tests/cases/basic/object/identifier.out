@@ -2,4 +2,4 @@
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
 
-int main() {JS::Any a=JS::Any("Hello");JS::Any object=JS::Any(JS::Object({{"a", a}}));}
+int main() {JS::Any a, object;a=JS::Any("Hello");object=JS::Any(JS::Object({{"a", a}}));}
