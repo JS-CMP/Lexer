@@ -7,7 +7,7 @@ namespace Lexer {
         std::ostream &os, const Function &function
     )
     {
-        os << "JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> " << TypeNames[function.return_type] << " {";
+        os << "JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> " << TypeNames[function.return_type] << " {";
         for (size_t i = 0; i < function.args.size(); i++) {
             os << TypeNames[function.args[i].type] << " " << function.args[i].name << " = arguments[\"" << i << "\"];";
         }

@@ -327,7 +327,7 @@ namespace Lexer {
         i++;
         i = eraseEol(body, size, i);
         if (body.value[i].type == TK_RBRACE) {
-            os << TypeNames[JS_ANY] << "(JS::Object())"; //TODO: remove JS::Object if possible
+            os << TypeNames[JS_ANY] << "(std::make_shared<JS::Object>())"; //TODO: remove JS::Object if possible
             return true;
         }
         if (body.value[i].type != TK_STRING && body.value[i + 1].type != TK_COLON) {
@@ -341,7 +341,7 @@ namespace Lexer {
             i = base_i;
             return false;
         }
-        os << TypeNames[JS_ANY] << "(JS::Object({"; //TODO: remove JS::Object if possible
+        os << TypeNames[JS_ANY] << "(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{"; //TODO: remove JS::Object if possible
         // example of object
         // { "key": "value", "key2": 2 }
         // example of transpiled object
@@ -390,7 +390,7 @@ namespace Lexer {
             body.value[i - 1].type == TK_STRING || body.value[i - 1].type == TK_RPAREN))) {
             return false;
         }
-        os << TypeNames[JS_ANY] << "(" << "JS::Array({";
+        os << TypeNames[JS_ANY] << "(" << "std::make_shared<JS::Array>(std::vector<JS::Any>{";
         i++;
         i = eraseEol(body, size, i);
         while (i < size && body.value[i].type != TK_RBRACK) {
