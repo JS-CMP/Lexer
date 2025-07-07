@@ -1,0 +1,5 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+
+int main() {JS::Any A, B, useA;A = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["name"]=JS::Any("A");return JS::Any();}));B = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["name"]=JS::Any("B");return JS::Any();}));useA=JS::Any(false);NEW((useA&&A||B));}

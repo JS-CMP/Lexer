@@ -1,0 +1,5 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+
+int main() {JS::Any test;test=JS::Any(true);NEW((test?String:Object));}

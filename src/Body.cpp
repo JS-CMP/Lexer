@@ -10,6 +10,9 @@ namespace Lexer {
             return true;
         }
         switch (body.value[i].type) {
+            case TK_THIS:
+                body_os << "thisArg";
+                break;
             case TK_PERIOD:
                 if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
                     body_os << "[\"" << body.value[i + 1].value << "\"]";
@@ -113,6 +116,8 @@ namespace Lexer {
             case TK_UNDEFINED_LITERAL:
                 os << TypeNames[JS_ANY] << "()";
                 return true;
+            case TK_NEW:
+                return Body::transpileNew(body, size, os, i);
             case TK_LBRACE:
                 return Body::transpileObject(body, size, os, i);
             case TK_LBRACK:
@@ -167,6 +172,76 @@ namespace Lexer {
             default:
                 return false;
         }
+    }
+    bool Body::transpileNew(const Body &body, size_t size, std::ostringstream &os, size_t &i) {
+        if (body.value[i].type != TK_NEW) {
+            return false;
+        }
+
+        os << "NEW(";
+        i++;
+        i = eraseEol(body, size, i);
+        if (body.value[i].type == TK_NEW) {
+            Body::encapsulate(body, size, os, i);
+            i++;
+            i = eraseEol(body, size, i);
+            while (i + 1 < size && body.value[i].type == TK_PERIOD && body.value[i + 1].type == TK_IDENTIFIER) {
+                push_tokens(body, os, i, size);
+                i++;
+            }
+        } else if (body.value[i].type == TK_IDENTIFIER) {
+            push_tokens(body, os, i, size);
+            i++;
+            while (i + 1 < size && body.value[i].type == TK_PERIOD &&
+                   body.value[i + 1].type == TK_IDENTIFIER) {
+                push_tokens(body, os, i, size);
+                i++; // Skip the period and identifier
+            }
+        } else if (body.value[i].type == TK_LPAREN) {
+            size_t nb_parens = 1;
+            i++;
+            i = eraseEol(body, size, i);
+            os << "(";
+            while (i < size && nb_parens > 0) {
+                if (body.value[i].type == TK_LPAREN) {
+                    nb_parens++;
+                } else if (body.value[i].type == TK_RPAREN) {
+                    nb_parens--;
+                }
+                push_tokens(body, os, i, size);
+                i++;
+            }
+        }
+        i = eraseEol(body, size, i);
+        if (body.value[i].type != TK_LPAREN) {
+            os << ")";
+            i--; // Move back to the last token
+            return true;
+        }
+        if (body.value[i].type == TK_LPAREN && i + 1 < size && body.value[i + 1].type == TK_RPAREN) {
+            os << ")";
+            i += 1; // Skip the parentheses
+            i = eraseEol(body, size, i);
+            return true;
+        }
+        os << ",";
+        i++;
+        i = eraseEol(body, size, i);
+        size_t nb_parens = 1;
+        while (i < size && nb_parens > 0) {
+            if (body.value[i].type == TK_LPAREN) {
+                nb_parens++;
+            } else if (body.value[i].type == TK_RPAREN) {
+                nb_parens--;
+            }
+            if (nb_parens > 0) {
+                push_tokens(body, os, i, size);
+            }
+            i++;
+        }
+        i--;
+        os << ")";
+        return true;
     }
 
     bool Body::transpileBlocks(const Body &body, size_t size, std::ostringstream &os, size_t &i, const std::vector<std::tuple<TokenType, TokenType, bool>> &stack) {

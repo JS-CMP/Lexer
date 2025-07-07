@@ -1,0 +1,5 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+
+int main() {JS::Any Factory;Factory = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["value"]=JS::Any(123);return JS::Any();}));return JS::Any();}));NEW((Factory()));}
