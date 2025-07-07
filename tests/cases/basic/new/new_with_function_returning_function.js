@@ -4,4 +4,4 @@ function Factory() {
     };
 }
 
-new (Factory())(); // NEW(Factory())
+console.log(new (Factory())()); // NEW(Factory())

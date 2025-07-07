@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any object;object=JS::Any(JS::Object({{"a", JS::Any()},{"b", JS::Any(nullptr)},{"c", JS::Any(true)},{"d", JS::Any(false)},{"e", JS::Any(0)},{"f", JS::Any(1)},{"g", JS::Any(1.1)},{"h", JS::Any("a")},{"i", JS::Any("")},{"v", JS::Any("a")},{"w", JS::Any("")}}));}
+int main() {JS::Any object;object=JS::Any(JS::Object({{u"a", JS::Any()},{u"b", JS::Any(nullptr)},{u"c", JS::Any(true)},{u"d", JS::Any(false)},{u"e", JS::Any(0)},{u"f", JS::Any(1)},{u"g", JS::Any(1.1)},{u"h", JS::Any("a")},{u"i", JS::Any("")},{u"v", JS::Any("a")},{u"w", JS::Any("")}}));}

@@ -4,4 +4,4 @@ function Foo() {
     };
 }
 
-new Foo()(); // NEW(Foo)()
+console.log(new Foo()()); // NEW(Foo)()

@@ -4,4 +4,4 @@ function Outer() {
     };
 }
 
-new new Outer().Foo(); // NEW(NEW(Outer).Foo)
+console.log(new new Outer().Foo()); // NEW(NEW(Outer).Foo)

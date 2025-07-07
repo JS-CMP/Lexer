@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a, b, c, d;a=JS::Any(5)==JS::Any("5");b=JS::Any(5)!=JS::Any("5");c=JS::Any(5)>JS::Any(3);d=JS::Any(5)<JS::Any(3);;;console["log"](a,b,c,d);}
+int main() {JS::Any a, b, c, d, e, f;a=JS::Any(5)==JS::Any("5");b=JS::Any(5)!=JS::Any("5");c=JS::Any(5)>JS::Any(3);d=JS::Any(5)<JS::Any(3);e=JS::Any(5) strictEq JS::Any("5");f=JS::Any(5) strictNeq JS::Any("5");console["log"](a,b,c,d);}

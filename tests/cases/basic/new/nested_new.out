@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Foo, x;Foo = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {};return JS::Any();}))return JS::Any();}));x=JS::Any(123);NEW(NEW(Foo));NEW((NEW(Foo)),x);NEW(NEW(Foo,x),x);}
+int main() {JS::Any Foo, x;Foo = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {console["log"](JS::Any("Inside Foo"));return JS::Any("Hello, World!");return JS::Any();}));return JS::Any();}));x=JS::Any(123);NEW(NEW(Foo));NEW((NEW(Foo)),x);console["log"](NEW(NEW(Foo,x),x));}

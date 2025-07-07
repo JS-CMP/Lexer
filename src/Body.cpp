@@ -10,8 +10,40 @@ namespace Lexer {
             return true;
         }
         switch (body.value[i].type) {
+            case TK_ASSIGN_ADD:
+            case TK_ASSIGN_SUB:
+            case TK_ASSIGN_MUL:
+            case TK_ASSIGN_MOD:
+            case TK_ASSIGN_DIV:
+            case TK_ASSIGN_BIT_AND:
+            case TK_ASSIGN_BIT_OR:
+            case TK_ASSIGN_BIT_XOR:
+            case TK_ASSIGN_SAR:
+            case TK_ASSIGN_SHL:
+                if (body.value[i - 1].type == TK_IDENTIFIER) {
+                    body_os << " = " << body.value[i - 1].value << " " << body.value[i].value.substr(0, body.value[i].value.size() - 1);
+                } else {
+                    throw std::runtime_error("Invalid assignment operator usage.");
+                }
+                break;
+            case TK_ASSIGN_SHR:
+                if (body.value[i - 1].type == TK_IDENTIFIER) {
+                    body_os << " = " << body.value[i - 1].value << " URightShift ";
+                } else {
+                    throw std::runtime_error("Invalid assignment operator usage.");
+                }
+                break;
+            case TK_SHR:
+                body_os << " URightShift ";
+                break;
             case TK_THIS:
                 body_os << "thisArg";
+                break;
+            case TK_EQ_STRICT:
+                body_os << " strictEq ";
+                break;
+            case TK_NE_STRICT:
+                body_os << " strictNeq ";
                 break;
             case TK_PERIOD:
                 if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
@@ -321,7 +353,7 @@ namespace Lexer {
             switch (body.value[i].type) {
                 case TK_STRING:
                 case TK_IDENTIFIER:
-                    os << "\"" << body.value[i].value << "\"";
+                    os << "u\"" << body.value[i].value << "\"";
                     break;
                 default:
                     return false;

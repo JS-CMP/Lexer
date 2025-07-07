@@ -1,6 +1,7 @@
 function Bar() {
     this.x = 42;
+    this.get = function () { return this.x; };
 }
-Bar.prototype.get = function () { return this.x; };
 
-new Bar().get(); // NEW(Bar).get();
+
+console.log(new Bar().get()); // NEW(Bar).get();

@@ -12,4 +12,4 @@ MyNS.Widget = function () {
     return this;
 };
 
-new MyNS.Widget().init(x).render(); // NEW(MyNS.Widget).init(x).render();
+console.log(new MyNS.Widget().init(x).render()); // NEW(MyNS.Widget).init(x).render();
