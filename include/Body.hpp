@@ -13,10 +13,12 @@ namespace Lexer {
 
         void parse();
 
-        static bool encapsulate(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
-        static bool transpileNew(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
-        static bool transpileObject(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
-        static bool transpileArray(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i);
+        static bool encapsulate(const Body& body, size_t size, std::ostringstream& os, size_t& i);
+        static bool transpileBlocks(const Body &body, size_t size, std::ostringstream &os, size_t &i, const std::vector<std::tuple<TokenType, TokenType, bool>> &stack);
+
+        static bool transpileNew(const Body &body, size_t size, std::ostringstream &os, size_t &i);
+        static bool transpileObject(const Body &body, size_t size, std::ostringstream &os, size_t &i);
+        static bool transpileArray(const Body &body, size_t size, std::ostringstream &os, size_t &i);
         static size_t eraseEol(const Body &body, size_t size, size_t &i);
 
         friend std::ostream &operator<<(std::ostream &os, const Body &body);

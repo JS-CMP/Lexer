@@ -1,15 +1,5 @@
-var x = "component";
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-var MyNS = {};
-MyNS.Widget = function () {
-    this.init = function (x) {
-        this.x = x;
-        return this;
-    };
-    this.render = function () {
-        return "Rendered " + this.x;
-    };
-    return this;
-};
-
-new MyNS.Widget().init(x).render(); // NEW(MyNS.Widget).init(x).render();
+int main() {JS::Any x, MyNS;x=JS::Any("component");MyNS=JS::Any(JS::Object());MyNS["Widget"]=JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["init"]=JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any x = arguments["0"];thisArg["x"]=x;return thisArg;return JS::Any();}));thisArg["render"]=JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any("Rendered ")+thisArg["x"];return JS::Any();}));return thisArg;return JS::Any();}));NEW(MyNS["Widget"])["init"](x)["render"]();}

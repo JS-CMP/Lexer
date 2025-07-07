@@ -1,10 +1,5 @@
-function Foo(a, b, c) {
-    this.a = a;
-    this.b = b;
-    this.c = c;
-}
-var a = 1, b = 2, c = 3;
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-new Foo; // NEW(Foo)
-new Foo(); //NEW(Foo)
-new Foo(a, b, c); // NEW(Foo, a, b, c)
+int main() {JS::Any Foo, a;Foo = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any a = arguments["0"];JS::Any b = arguments["1"];JS::Any c = arguments["2"];thisArg["a"]=a;thisArg["b"]=b;thisArg["c"]=c;return JS::Any();}));a=JS::Any(1),b=JS::Any(2),c=JS::Any(3);NEW(Foo);NEW(Foo);NEW(Foo,a,b,c);}

@@ -1,7 +1,5 @@
-function Greeter(name) {
-    this.greet = function () {
-        return "Hello, " + name;
-    };
-}
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-new Greeter("World").greet(); // NEW(Greeter, "World").greet();
+int main() {JS::Any Greeter;Greeter = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any name = arguments["0"];thisArg["greet"]=JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any("Hello, ")+name;return JS::Any();}));return JS::Any();}));NEW(Greeter,JS::Any("World"))["greet"]();}

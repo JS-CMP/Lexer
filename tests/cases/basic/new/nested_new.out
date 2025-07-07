@@ -1,7 +1,5 @@
-function Foo() {
-    return function () {};
-}
-var x = 123;
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-new new Foo(); // NEW(NEW(Foo))
-new (new Foo)(x); // NEW(NEW(Foo), x)
+int main() {JS::Any Foo, x;Foo = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {};return JS::Any();}))return JS::Any();}));x=JS::Any(123);NEW(NEW(Foo));NEW((NEW(Foo)),x);NEW(NEW(Foo,x),x);}

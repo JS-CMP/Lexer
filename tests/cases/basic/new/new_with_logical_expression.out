@@ -1,5 +1,5 @@
-function A() { this.name = "A"; }
-function B() { this.name = "B"; }
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-var useA = false;
-new (useA && A || B)(); // NEW((useA && A || B));
+int main() {JS::Any A, B, useA;A = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["name"]=JS::Any("A");return JS::Any();}));B = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["name"]=JS::Any("B");return JS::Any();}));useA=JS::Any(false);NEW((useA&&A||B));}

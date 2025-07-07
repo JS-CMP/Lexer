@@ -31,7 +31,6 @@ namespace Lexer {
         if (tokens[i - 1].type == TK_IDENTIFIER) {
             func.name = tokens[i - 1].value;
         } else {
-            std::cout << "Anonymous function" << std::endl;
             func.name = "anonymous";
         }
         i++;
@@ -46,7 +45,7 @@ namespace Lexer {
             i++;
         }
         i+= 2;
-        while (nb_brace != 0) {
+        while (nb_brace != 0 && i < size) {
             func.value.push_back(tokens[i]);
             i++;
             if (tokens[i].type == TK_RBRACE) {

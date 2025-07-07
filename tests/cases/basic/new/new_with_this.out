@@ -1,7 +1,5 @@
-function Outer() {
-    this.Foo = function () {
-        return 123;
-    };
-}
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-new new Outer().Foo(); // NEW(NEW(Outer).Foo)
+int main() {JS::Any Outer;Outer = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["Foo"]=JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(123);return JS::Any();}));return JS::Any();}));NEW(NEW(Outer)["Foo"]);}

@@ -1,6 +1,5 @@
-function Bar() {
-    this.x = 42;
-}
-Bar.prototype.get = function () { return this.x; };
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-new Bar().get(); // NEW(Bar).get();
+int main() {JS::Any Bar;Bar = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["x"]=JS::Any(42);return JS::Any();}));Bar["prototype"]["get"]=JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return thisArg["x"];return JS::Any();}));NEW(Bar)["get"]();}

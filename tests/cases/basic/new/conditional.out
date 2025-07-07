@@ -1,3 +1,5 @@
-var test = true;
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-new (test ? String : Object)(); // NEW((test ? String : Object))
+int main() {JS::Any test;test=JS::Any(true);NEW((test?String:Object));}

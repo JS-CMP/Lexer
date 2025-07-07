@@ -10,6 +10,9 @@ namespace Lexer {
             return true;
         }
         switch (body.value[i].type) {
+            case TK_THIS:
+                body_os << "thisArg";
+                break;
             case TK_PERIOD:
                 if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
                     body_os << "[\"" << body.value[i + 1].value << "\"]";
@@ -114,7 +117,7 @@ namespace Lexer {
                 os << TypeNames[JS_ANY] << "()";
                 return true;
             case TK_NEW:
-                return Body::transpileNew(body, size, type, os, i);
+                return Body::transpileNew(body, size, os, i);
             case TK_LBRACE:
                 return Body::transpileObject(body, size, os, i);
             case TK_LBRACK:
@@ -170,35 +173,30 @@ namespace Lexer {
                 return false;
         }
     }
-    bool Body::transpileNew(const Body &body, size_t size, Types &type, std::ostream &os, size_t &i) {
+    bool Body::transpileNew(const Body &body, size_t size, std::ostringstream &os, size_t &i) {
         if (body.value[i].type != TK_NEW) {
             return false;
         }
 
-        std::cout << "Transpiling NEW at index " << i << '\n';
         os << "NEW(";
         i++;
         i = eraseEol(body, size, i);
         if (body.value[i].type == TK_NEW) {
-            std
-            Body::encapsulate(body, size, type, os, i);
+            Body::encapsulate(body, size, os, i);
             i++;
             i = eraseEol(body, size, i);
-            std::cout << "Token : " << body.value[i].value << '\n';
             while (i + 1 < size && body.value[i].type == TK_PERIOD && body.value[i + 1].type == TK_IDENTIFIER) {
-                os << "[\"" << body.value[i + 1].value << "\"]"; // TODO: rework with push tokens
-                i += 2;
-                i = eraseEol(body, size, i);
+                push_tokens(body, os, i, size);
+                i++;
             }
         } else if (body.value[i].type == TK_IDENTIFIER) {
-            std::cout << "Identifier found: " << body.value[i].value << '\n';
-            os << body.value[i].value; // TODO: rework with push tokens
-            while (i + 2 < size && body.value[i + 1].type == TK_PERIOD &&
-                   body.value[i + 2].type == TK_IDENTIFIER) {
-                os << "[\"" << body.value[i + 2].value << "\"]"; // TODO: rework with push tokens
-                i += 2;
-            }
+            push_tokens(body, os, i, size);
             i++;
+            while (i + 1 < size && body.value[i].type == TK_PERIOD &&
+                   body.value[i + 1].type == TK_IDENTIFIER) {
+                push_tokens(body, os, i, size);
+                i++; // Skip the period and identifier
+            }
         } else if (body.value[i].type == TK_LPAREN) {
             size_t nb_parens = 1;
             i++;
@@ -210,9 +208,8 @@ namespace Lexer {
                 } else if (body.value[i].type == TK_RPAREN) {
                     nb_parens--;
                 }
-                os << body.value[i].value; // TODO: rework with push tokens
+                push_tokens(body, os, i, size);
                 i++;
-                i = eraseEol(body, size, i);
             }
         }
         i = eraseEol(body, size, i);
@@ -238,10 +235,9 @@ namespace Lexer {
                 nb_parens--;
             }
             if (nb_parens > 0) {
-                os << body.value[i].value; // TODO: rework with push tokens
+                push_tokens(body, os, i, size);
             }
             i++;
-            i = eraseEol(body, size, i);
         }
         i--;
         os << ")";

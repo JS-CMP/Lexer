@@ -1,5 +1,5 @@
-function Foo() {
-    this.value = 10;
-}
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
 
-new (0, Foo)(); // NEW((0, Foo))
+int main() {JS::Any Foo;Foo = JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["value"]=JS::Any(10);return JS::Any();}));NEW((JS::Any(0),Foo));}
