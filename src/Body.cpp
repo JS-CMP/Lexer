@@ -61,7 +61,7 @@ namespace Lexer {
                 body_os << "throw ";
             case TK_PERIOD:
                 if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
-                    body_os << "[\"" << body.value[i + 1].value << "\"]";
+                    body_os << "[u\"" << body.value[i + 1].value << "\"]";
                     i++;
                 }
                 break;
@@ -154,7 +154,7 @@ namespace Lexer {
                 os << TypeNames[JS_ANY] << "(" << body.value[i].value << ")";
                 return true;
             case TK_STRING:
-                os << TypeNames[JS_ANY] << "(\"" << body.value[i].value << "\")";
+                os << TypeNames[JS_ANY] << "(u\"" << body.value[i].value << "\")";
                 return true;
             case TK_NULL_LITERAL:
                 os << TypeNames[JS_ANY] << "(nullptr)";
