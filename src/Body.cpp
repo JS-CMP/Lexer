@@ -36,15 +36,24 @@ namespace Lexer {
             case TK_SHR:
                 body_os << " URightShift ";
                 break;
-            case TK_THIS:
-                body_os << "thisArg";
-                break;
             case TK_EQ_STRICT:
                 body_os << " strictEq ";
                 break;
             case TK_NE_STRICT:
                 body_os << " strictNeq ";
                 break;
+            case TK_TYPEOF:
+                body_os << "typeOf ";
+                break;
+            case TK_DELETE:
+                body_os << "del ";
+                break;
+            case TK_VOID:
+                body_od << "Void ";
+            case TK_THIS:
+                body_os << "thisArg";
+                break;
+
             case TK_THROW:
                 body_os << "throw ";
             case TK_PERIOD:
