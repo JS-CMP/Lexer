@@ -28,6 +28,7 @@ namespace Lexer {
         while (tokens[i].type != TK_LPAREN && i < size) {
             i++;
         }
+
         if (tokens[i - 1].type == TK_IDENTIFIER) {
             func.name = tokens[i - 1].value;
         } else {
@@ -35,7 +36,7 @@ namespace Lexer {
         }
         i++;
         func.return_type = JS_ANY;
-        while (tokens[i].type != TK_RPAREN) {
+        while (tokens[i].type != TK_RPAREN && i < size) {
             if (tokens[i].type == TK_IDENTIFIER) {
                 arg a;
                 a.type = JS_ANY;
@@ -65,7 +66,11 @@ namespace Lexer {
         for (size_t i = 0; i < size; i++) {
             if ((i == 0 || (tokens[i - 1].type == TK_EOL || tokens[i - 1].type == TK_SEMICOLON)) && tokens[i].type == TK_FUNCTION) {
                 size_t start = i;
+
                 Function func = parse_func(tokens, size, i);
+                if (func.name == "anonymous") {
+                    continue;
+                }
                 tokens_to_erase.emplace_back(start, i);
                 functions.push_back(func);
             }

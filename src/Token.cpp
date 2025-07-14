@@ -32,18 +32,24 @@ bool Lexer::Token::isSkippable(char ch)
 
 bool Lexer::Token::isSymbolStart(char ch)
 {
-    return isalpha(ch) || ch == '_';
+    return isalpha(ch) || ch == '_' || ch == '$';
 }
 
 bool Lexer::Token::isSymbol(char ch)
 {
-    return isalnum(ch) || ch == '_';
+    return isalnum(ch) || ch == '_' || ch == '$';
 }
 
 bool Lexer::Token::isAlpha(const std::string &str)
 {
+    if (str.empty()) {
+        return false;
+    }
+    if (!(isalpha(str[0]) || str[0] != '_' || str[0] != '$')){
+        return false;
+    }
     for (char ch: str) {
-        if (!isalpha(ch)) {
+        if (!(isalnum(ch) || ch != '_' || ch != '$')) {
             return false;
         }
     }

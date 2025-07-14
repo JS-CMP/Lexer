@@ -45,6 +45,8 @@ namespace Lexer {
             case TK_NE_STRICT:
                 body_os << " strictNeq ";
                 break;
+            case TK_THROW:
+                body_os << "throw ";
             case TK_PERIOD:
                 if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
                     body_os << "[\"" << body.value[i + 1].value << "\"]";
@@ -109,7 +111,7 @@ namespace Lexer {
 
         Body::eraseEol(body, size, i);
         for (; i < size; i++) {
-            if (push_tokens(body, body_os, i, size, &vars)) continue;
+            push_tokens(body, body_os, i, size, &vars);
         }
         if (size > 0 && body.value[size - 1].type != TK_SEMICOLON && body.value[size - 1].type != TK_EOL) {
             body_os << ";";
