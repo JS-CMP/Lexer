@@ -49,7 +49,7 @@ namespace Lexer {
                 body_os << "del ";
                 break;
             case TK_VOID:
-                body_od << "Void ";
+                body_os << "Void ";
             case TK_THIS:
                 body_os << "thisArg";
                 break;
