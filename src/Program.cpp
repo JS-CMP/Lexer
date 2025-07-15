@@ -7,6 +7,7 @@ Lexer::Program::Program(std::vector<Token> &tokens)
     this->includes.emplace_back("types/JsAny.hpp");
     this->includes.emplace_back("global/global.hpp");
     this->includes.emplace_back("types/objects/Types.hpp");
+    this->includes.emplace_back("customOperators/CustomOperators.hpp");
 }
 
 void Lexer::Program::parse()

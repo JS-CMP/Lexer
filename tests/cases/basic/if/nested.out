@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
 int main() {if (JS::Any(true)){console["log"](JS::Any("Outer if"));if (JS::Any(true)){console["log"](JS::Any("Inner if should run"));};};}

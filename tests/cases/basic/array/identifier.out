@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a, array;a=JS::Any("Hello");array=JS::Any(JS::Array({a}));}
+int main() {JS::Any a, array;a=JS::Any("Hello");array=JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{a}));}

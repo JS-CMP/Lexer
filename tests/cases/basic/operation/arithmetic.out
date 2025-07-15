@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
 int main() {JS::Any a, b, c, d, e;a=JS::Any(10)+JS::Any(5);b=a-JS::Any(3);c=b*JS::Any(2);d=c/JS::Any(4);e=d%JS::Any(3);console["log"](a,b,c,d,e);}

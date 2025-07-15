@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
 int main() {JS::Any i;i=JS::Any(0);while (i<JS::Any(5)){i++;if (i%JS::Any(2)==JS::Any(0)){continue;};};}

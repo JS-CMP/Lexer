@@ -7,7 +7,7 @@ namespace Lexer {
         std::ostream &os, const Function &function
     )
     {
-        os << "JS::Any(JS::Function([&](const JS::Any &thisArg, const JS::Any &arguments) -> " << TypeNames[function.return_type] << " {";
+        os << "JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> " << TypeNames[function.return_type] << " {";
         for (size_t i = 0; i < function.args.size(); i++) {
             os << TypeNames[function.args[i].type] << " " << function.args[i].name << " = arguments[\"" << i << "\"];";
         }
@@ -28,15 +28,15 @@ namespace Lexer {
         while (tokens[i].type != TK_LPAREN && i < size) {
             i++;
         }
+
         if (tokens[i - 1].type == TK_IDENTIFIER) {
             func.name = tokens[i - 1].value;
         } else {
-            std::cout << "Anonymous function" << std::endl;
             func.name = "anonymous";
         }
         i++;
         func.return_type = JS_ANY;
-        while (tokens[i].type != TK_RPAREN) {
+        while (tokens[i].type != TK_RPAREN && i < size) {
             if (tokens[i].type == TK_IDENTIFIER) {
                 arg a;
                 a.type = JS_ANY;
@@ -46,7 +46,7 @@ namespace Lexer {
             i++;
         }
         i+= 2;
-        while (nb_brace != 0) {
+        while (nb_brace != 0 && i < size) {
             func.value.push_back(tokens[i]);
             i++;
             if (tokens[i].type == TK_RBRACE) {
@@ -66,7 +66,11 @@ namespace Lexer {
         for (size_t i = 0; i < size; i++) {
             if ((i == 0 || (tokens[i - 1].type == TK_EOL || tokens[i - 1].type == TK_SEMICOLON)) && tokens[i].type == TK_FUNCTION) {
                 size_t start = i;
+
                 Function func = parse_func(tokens, size, i);
+                if (func.name == "anonymous") {
+                    continue;
+                }
                 tokens_to_erase.emplace_back(start, i);
                 functions.push_back(func);
             }

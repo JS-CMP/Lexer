@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
 int main() {JS::Any x, y;x=JS::Any(5);y=JS::Any(10);if (x<JS::Any(10)&&y>JS::Any(5)){console["log"](JS::Any("Both conditions are true"));};}

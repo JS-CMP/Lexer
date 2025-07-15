@@ -10,9 +10,58 @@ namespace Lexer {
             return true;
         }
         switch (body.value[i].type) {
+            case TK_ASSIGN_ADD:
+            case TK_ASSIGN_SUB:
+            case TK_ASSIGN_MUL:
+            case TK_ASSIGN_MOD:
+            case TK_ASSIGN_DIV:
+            case TK_ASSIGN_BIT_AND:
+            case TK_ASSIGN_BIT_OR:
+            case TK_ASSIGN_BIT_XOR:
+            case TK_ASSIGN_SAR:
+            case TK_ASSIGN_SHL:
+                if (body.value[i - 1].type == TK_IDENTIFIER) {
+                    body_os << " = " << body.value[i - 1].value << " " << body.value[i].value.substr(0, body.value[i].value.size() - 1);
+                } else {
+                    throw std::runtime_error("Invalid assignment operator usage.");
+                }
+                break;
+            case TK_ASSIGN_SHR:
+                if (body.value[i - 1].type == TK_IDENTIFIER) {
+                    body_os << " = " << body.value[i - 1].value << " URightShift ";
+                } else {
+                    throw std::runtime_error("Invalid assignment operator usage.");
+                }
+                break;
+            case TK_SHR:
+                body_os << " URightShift ";
+                break;
+            case TK_EQ_STRICT:
+                body_os << " strictEq ";
+                break;
+            case TK_NE_STRICT:
+                body_os << " strictNeq ";
+                break;
+            case TK_TYPEOF:
+                body_os << "typeOf ";
+                break;
+            case TK_DELETE:
+                body_os << "del ";
+                break;
+            case TK_VOID:
+                body_os << "(Void ";
+                push_tokens(body, body_os, ++i, size);
+                body_os << ")";
+                break;
+            case TK_THIS:
+                body_os << "thisArg";
+                break;
+
+            case TK_THROW:
+                body_os << "throw ";
             case TK_PERIOD:
                 if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
-                    body_os << "[\"" << body.value[i + 1].value << "\"]";
+                    body_os << "[u\"" << body.value[i + 1].value << "\"]";
                     i++;
                 }
                 break;
@@ -74,7 +123,7 @@ namespace Lexer {
 
         Body::eraseEol(body, size, i);
         for (; i < size; i++) {
-            if (push_tokens(body, body_os, i, size, &vars)) continue;
+            push_tokens(body, body_os, i, size, &vars);
         }
         if (size > 0 && body.value[size - 1].type != TK_SEMICOLON && body.value[size - 1].type != TK_EOL) {
             body_os << ";";
@@ -105,7 +154,7 @@ namespace Lexer {
                 os << TypeNames[JS_ANY] << "(" << body.value[i].value << ")";
                 return true;
             case TK_STRING:
-                os << TypeNames[JS_ANY] << "(\"" << body.value[i].value << "\")";
+                os << TypeNames[JS_ANY] << "(u\"" << body.value[i].value << "\")";
                 return true;
             case TK_NULL_LITERAL:
                 os << TypeNames[JS_ANY] << "(nullptr)";
@@ -113,6 +162,8 @@ namespace Lexer {
             case TK_UNDEFINED_LITERAL:
                 os << TypeNames[JS_ANY] << "()";
                 return true;
+            case TK_NEW:
+                return Body::transpileNew(body, size, os, i);
             case TK_LBRACE:
                 return Body::transpileObject(body, size, os, i);
             case TK_LBRACK:
@@ -168,6 +219,76 @@ namespace Lexer {
                 return false;
         }
     }
+    bool Body::transpileNew(const Body &body, size_t size, std::ostringstream &os, size_t &i) {
+        if (body.value[i].type != TK_NEW) {
+            return false;
+        }
+
+        os << "NEW(";
+        i++;
+        i = eraseEol(body, size, i);
+        if (body.value[i].type == TK_NEW) {
+            Body::encapsulate(body, size, os, i);
+            i++;
+            i = eraseEol(body, size, i);
+            while (i + 1 < size && body.value[i].type == TK_PERIOD && body.value[i + 1].type == TK_IDENTIFIER) {
+                push_tokens(body, os, i, size);
+                i++;
+            }
+        } else if (body.value[i].type == TK_IDENTIFIER) {
+            push_tokens(body, os, i, size);
+            i++;
+            while (i + 1 < size && body.value[i].type == TK_PERIOD &&
+                   body.value[i + 1].type == TK_IDENTIFIER) {
+                push_tokens(body, os, i, size);
+                i++; // Skip the period and identifier
+            }
+        } else if (body.value[i].type == TK_LPAREN) {
+            size_t nb_parens = 1;
+            i++;
+            i = eraseEol(body, size, i);
+            os << "(";
+            while (i < size && nb_parens > 0) {
+                if (body.value[i].type == TK_LPAREN) {
+                    nb_parens++;
+                } else if (body.value[i].type == TK_RPAREN) {
+                    nb_parens--;
+                }
+                push_tokens(body, os, i, size);
+                i++;
+            }
+        }
+        i = eraseEol(body, size, i);
+        if (body.value[i].type != TK_LPAREN) {
+            os << ")";
+            i--; // Move back to the last token
+            return true;
+        }
+        if (body.value[i].type == TK_LPAREN && i + 1 < size && body.value[i + 1].type == TK_RPAREN) {
+            os << ")";
+            i += 1; // Skip the parentheses
+            i = eraseEol(body, size, i);
+            return true;
+        }
+        os << ",";
+        i++;
+        i = eraseEol(body, size, i);
+        size_t nb_parens = 1;
+        while (i < size && nb_parens > 0) {
+            if (body.value[i].type == TK_LPAREN) {
+                nb_parens++;
+            } else if (body.value[i].type == TK_RPAREN) {
+                nb_parens--;
+            }
+            if (nb_parens > 0) {
+                push_tokens(body, os, i, size);
+            }
+            i++;
+        }
+        i--;
+        os << ")";
+        return true;
+    }
 
     bool Body::transpileBlocks(const Body &body, size_t size, std::ostringstream &os, size_t &i, const std::vector<std::tuple<TokenType, TokenType, bool>> &stack) {
         for (const auto &tuple : stack) {
@@ -220,7 +341,7 @@ namespace Lexer {
         i++;
         i = eraseEol(body, size, i);
         if (body.value[i].type == TK_RBRACE) {
-            os << TypeNames[JS_ANY] << "(JS::Object())"; //TODO: remove JS::Object if possible
+            os << TypeNames[JS_ANY] << "(std::make_shared<JS::Object>())"; //TODO: remove JS::Object if possible
             return true;
         }
         if (body.value[i].type != TK_STRING && body.value[i + 1].type != TK_COLON) {
@@ -234,7 +355,7 @@ namespace Lexer {
             i = base_i;
             return false;
         }
-        os << TypeNames[JS_ANY] << "(JS::Object({"; //TODO: remove JS::Object if possible
+        os << TypeNames[JS_ANY] << "(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{"; //TODO: remove JS::Object if possible
         // example of object
         // { "key": "value", "key2": 2 }
         // example of transpiled object
@@ -246,7 +367,7 @@ namespace Lexer {
             switch (body.value[i].type) {
                 case TK_STRING:
                 case TK_IDENTIFIER:
-                    os << "\"" << body.value[i].value << "\"";
+                    os << "u\"" << body.value[i].value << "\"";
                     break;
                 default:
                     return false;
@@ -283,7 +404,7 @@ namespace Lexer {
             body.value[i - 1].type == TK_STRING || body.value[i - 1].type == TK_RPAREN))) {
             return false;
         }
-        os << TypeNames[JS_ANY] << "(" << "JS::Array({";
+        os << TypeNames[JS_ANY] << "(" << "std::make_shared<JS::Array>(std::vector<JS::Any>{";
         i++;
         i = eraseEol(body, size, i);
         while (i < size && body.value[i].type != TK_RBRACK) {

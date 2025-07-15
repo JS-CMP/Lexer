@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a, object;a=JS::Any("Hello");object=JS::Any(JS::Object({{"a", a}}));}
+int main() {JS::Any a, object;a=JS::Any("Hello");object=JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"a", a}}));}

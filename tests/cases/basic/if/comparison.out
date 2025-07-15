@@ -1,5 +1,6 @@
 #include "types/JsAny.hpp"
 #include "global/global.hpp"
 #include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
 
 int main() {JS::Any a;a=JS::Any(10);if (a>JS::Any(5)){console["log"](JS::Any("Greater than 5"));};}
