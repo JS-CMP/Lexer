@@ -195,8 +195,8 @@ namespace Lexer {
 
             "delete",
             "typeof",
-            "instanceof",
             "debugger",
+            "instanceof",
             "void",
             "break",
             "continue",
