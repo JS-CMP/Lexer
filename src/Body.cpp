@@ -52,7 +52,7 @@ namespace Lexer {
                 body_os << " in ";
                 break;
             case TK_INSTANCEOF:
-                body_os << " instanceOf ";
+                body_os << " instanceof ";
                 break;
             case TK_VOID:
                 body_os << "(Void ";
