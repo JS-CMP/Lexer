@@ -48,6 +48,9 @@ namespace Lexer {
             case TK_DELETE:
                 body_os << "del ";
                 break;
+            case TK_IN:
+                body_os << " in ";
+                break;
             case TK_VOID:
                 body_os << "(Void ";
                 push_tokens(body, body_os, ++i, size);
