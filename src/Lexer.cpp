@@ -114,7 +114,9 @@ Lexer::Token Lexer::Lexer::nextToken()
     if (isdigit(ch) || (ch == '.' && isdigit(this->content[this->cursor + 1]))) {
         std::string value;
         while ((this->cursor < this->content.size() &&
-            isalnum(this->content[this->cursor])) || this->content[this->cursor] == '-' || this->content[this->cursor] == '.') {
+            isalnum(this->content[this->cursor])) || this->content[this->cursor] == '-' || this->content[this->cursor] == '.' ||
+            this->content[this->cursor] == 'e' || this->content[this->cursor] == 'E' || (this->content[this->cursor] == '+' &&
+                (this->cursor - 1 != 0 && this->content[this->cursor - 1] == 'e' || this->content[this->cursor - 1] == 'E'))) {
             value += this->content[this->cursor];
             this->cursor++;
         }
