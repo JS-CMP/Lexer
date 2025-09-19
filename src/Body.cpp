@@ -51,6 +51,9 @@ namespace Lexer {
             case TK_IN:
                 body_os << " in ";
                 break;
+            case TK_INSTANCEOF:
+                body_os << " instanceOf ";
+                break;
             case TK_VOID:
                 body_os << "(Void ";
                 push_tokens(body, body_os, ++i, size);
@@ -59,7 +62,6 @@ namespace Lexer {
             case TK_THIS:
                 body_os << "thisArg";
                 break;
-
             case TK_THROW:
                 body_os << "throw ";
             case TK_PERIOD:
