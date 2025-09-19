@@ -413,11 +413,22 @@ namespace Lexer {
         i++;
         i = eraseEol(body, size, i);
         while (i < size && body.value[i].type != TK_RBRACK) {
-            if (i < size && body.value[i].type == TK_IDENTIFIER) {
+            if (body.value[i].type == TK_IDENTIFIER) {
                 os << body.value[i].value;
-            } else if (i < size && !encapsulate(body, size, os, i)) {
+            } else if (body.value[i].type == TK_COMMA) {
+                os << TypeNames[JS_ANY] << "(), ";
+                i++;
+                i = eraseEol(body, size, i);
+                if (i < size && body.value[i].type == TK_RBRACK) {
+                    os << TypeNames[JS_ANY] << "()";
+                    break;
+                }
+                continue;
+            } else if (!encapsulate(body, size, os, i)) {
                 return false;
             }
+
+
             i = eraseEol(body, size, i);
             i++;
             if (i < size && body.value[i].type == TK_COMMA) {

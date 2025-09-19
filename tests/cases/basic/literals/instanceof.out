@@ -1,0 +1,6 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {JS::Any __obj;__obj=JS::Any(std::make_shared<JS::Object>());if (!(__obj instanceof Object)){console[u"error"](JS::Any(u"#1: var __obj={}; (__obj instanceof Object) === true. Actual: ")+((__obj instanceof Object)));};}
