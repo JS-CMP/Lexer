@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a;a=JS::Any(10);a = a +JS::Any(5);a = a -JS::Any(3);a = a *JS::Any(2);a = a /JS::Any(4);a = a %JS::Any(3);a = a &JS::Any(4);a = a |JS::Any(5);a = a ^JS::Any(4);a = a <<JS::Any(4);a = a >>JS::Any(4);a = a URightShift JS::Any(4);console["log"](a);}
+int main() {JS::Any a;a=JS::Any(10);a = a +JS::Any(5);a = a -JS::Any(3);a = a *JS::Any(2);a = a /JS::Any(4);a = a %JS::Any(3);a = a &JS::Any(4);a = a |JS::Any(5);a = a ^JS::Any(4);a = a <<JS::Any(4);a = a >>JS::Any(4);a = a URightShift JS::Any(4);console[u"log"](a);}

@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {for (JS::Any i=JS::Any(0);i<JS::Any(3);i++){for (JS::Any j=JS::Any(0);j<JS::Any(3);j++){console["log"](i,j);};};}
+int main() {for (JS::Any i=JS::Any(0);i<JS::Any(3);i++){for (JS::Any j=JS::Any(0);j<JS::Any(3);j++){console[u"log"](i,j);};};}

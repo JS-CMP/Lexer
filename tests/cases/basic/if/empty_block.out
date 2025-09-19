@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {if (JS::Any(false)){JS::Any("Intentionally left empty");}else {console["log"](JS::Any("Only else block executes"));};}
+int main() {if (JS::Any(false)){JS::Any(u"Intentionally left empty");}else {console[u"log"](JS::Any(u"Only else block executes"));};}

@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any b;b=JS::Any(15);if (b<JS::Any(10)){console["log"](JS::Any("Less than 10"));}else if (b<JS::Any(20)){console["log"](JS::Any("Between 10 and 20"));}else {console["log"](JS::Any("20 or greater"));};}
+int main() {JS::Any b;b=JS::Any(15);if (b<JS::Any(10)){console[u"log"](JS::Any(u"Less than 10"));}else if (b<JS::Any(20)){console[u"log"](JS::Any(u"Between 10 and 20"));}else {console[u"log"](JS::Any(u"20 or greater"));};}

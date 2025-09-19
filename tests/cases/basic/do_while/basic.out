@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {do {console["log"](JS::Any("Hello"));}while (JS::Any(false));}
+int main() {do {console[u"log"](JS::Any(u"Hello"));}while (JS::Any(false));}

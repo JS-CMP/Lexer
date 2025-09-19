@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a, b, c;a=JS::Any(true)&&JS::Any(false);b=JS::Any(true)||JS::Any(false);c=!a;console["log"](a,b,c);}
+int main() {JS::Any a, b, c;a=JS::Any(true)&&JS::Any(false);b=JS::Any(true)||JS::Any(false);c=!a;console[u"log"](a,b,c);}

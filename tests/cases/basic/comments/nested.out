@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any c;c=JS::Any("/* not a real comment */");}
+int main() {JS::Any c;c=JS::Any(u"/* not a real comment */");}

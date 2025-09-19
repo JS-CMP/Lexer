@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Foo;Foo = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(99);return JS::Any();}));return JS::Any();}));console["log"](NEW(Foo)());}
+int main() {JS::Any Foo;Foo = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(99);return JS::Any();}));return JS::Any();}));console[u"log"](NEW(Foo)());}

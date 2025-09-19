@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any A, B, useA;A = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["name"]=JS::Any("A");return JS::Any();}));B = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["name"]=JS::Any("B");return JS::Any();}));useA=JS::Any(false);console["log"](NEW((useA&&A||B)));}
+int main() {JS::Any A, B, useA;A = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg[u"name"]=JS::Any(u"A");return JS::Any();}));B = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg[u"name"]=JS::Any(u"B");return JS::Any();}));useA=JS::Any(false);console[u"log"](NEW((useA&&A||B)));}

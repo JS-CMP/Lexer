@@ -46,6 +46,12 @@ namespace Lexer {
             i++;
         }
         i+= 2;
+        if (tokens[i].type == TK_RBRACE) {
+            nb_brace--;
+        }
+        if (tokens[i].type == TK_LBRACE) {
+            nb_brace++;
+        }
         while (nb_brace != 0 && i < size) {
             func.value.push_back(tokens[i]);
             i++;

@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {console["log"](JS::Any("Hello World!"));}
+int main() {console[u"log"](JS::Any(u"Hello World!"));}

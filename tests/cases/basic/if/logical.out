@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {if (JS::Any(true)&&JS::Any(false)){console["log"](JS::Any("Should not run"));}else if (JS::Any(true)||JS::Any(false)){console["log"](JS::Any("Should run"));};}
+int main() {if (JS::Any(true)&&JS::Any(false)){console[u"log"](JS::Any(u"Should not run"));}else if (JS::Any(true)||JS::Any(false)){console[u"log"](JS::Any(u"Should run"));};}

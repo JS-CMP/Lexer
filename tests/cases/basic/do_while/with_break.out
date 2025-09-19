@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {do {console["log"](JS::Any("Loop running"));break;}while (JS::Any(true));}
+int main() {do {console[u"log"](JS::Any(u"Loop running"));break;}while (JS::Any(true));}

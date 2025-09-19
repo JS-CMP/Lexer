@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a, object;a=JS::Any("Hello");object=JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"a", a}}));}
+int main() {JS::Any a, object;a=JS::Any(u"Hello");object=JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"a", a}}));}

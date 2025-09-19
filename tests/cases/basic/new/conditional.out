@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any test;test=JS::Any(true);console["log"](NEW((test?String:Object)));}
+int main() {JS::Any test;test=JS::Any(true);console[u"log"](NEW((test?String:Object)));}
