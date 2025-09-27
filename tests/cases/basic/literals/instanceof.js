@@ -1,5 +1,5 @@
-var __obj={};
+var func = function () {}
 
-if (!(__obj instanceof Object)) {
-    console.error('#1: var __obj={}; (__obj instanceof Object) === true. Actual: ' + ((__obj instanceof Object)));
+if (func instanceof Function) {
+    console.log("func is a function");
 }

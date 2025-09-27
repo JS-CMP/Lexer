@@ -80,9 +80,16 @@ namespace Lexer {
                 }
                 break;
             case TK_EOL:
-                if (i != 0 && (body.value[i - 1].type == TK_SEMICOLON || body.value[i - 1].type == TK_LBRACE)) {
+                if (i != 0 && (
+                    body.value[i - 1].type == TK_SEMICOLON ||
+                    body.value[i - 1].type == TK_LBRACE ||
+                    body.value[i - 1].type == TK_COMMA ||
+                    body.value[i - 1].type == TK_LPAREN ||
+                    (body.value[i - 1].type > TK_UNDEFINED_LITERAL && body.value[i - 1].type <= TK_IDENTIFIER &&
+                        i != 1 && body.value[i - 2].type == TK_EOL))) {
                     return true;
                 }
+                std::cout << "[EOL] " << i << " / " << size << " BEFORE " << body.value[i - 1].value <<  " TYPE " << TokenName[body.value[i - 1].type] << " TYPE NUMBER " << body.value[i - 1].type <<  " TYPE NUMBER BEFORE" << body.value[i - 2].type << std::endl;
                 [[fallthrough]];
             case TK_SEMICOLON:
                 body_os << ";";

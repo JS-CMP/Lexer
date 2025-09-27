@@ -1,0 +1,6 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {JS::Any test;test = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any a = arguments["0"];JS::Any b = arguments["1"];JS::Any c = arguments["2"];JS::Any d = arguments["3"];return a+b+c+d;return JS::Any();}));test(JS::Any(1),JS::Any(2),JS::Any(3),JS::Any(4));}

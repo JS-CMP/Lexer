@@ -3,4 +3,4 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any __obj;__obj=JS::Any(std::make_shared<JS::Object>());if (!(__obj instanceof Object)){console[u"error"](JS::Any(u"#1: var __obj={}; (__obj instanceof Object) === true. Actual: ")+((__obj instanceof Object)));};}
+int main() {JS::Any func;func=JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any();}));if (func instanceof Function){console[u"log"](JS::Any(u"func is a function"));};}
