@@ -64,6 +64,7 @@ namespace Lexer {
                 break;
             case TK_THROW:
                 body_os << "throw ";
+                break;
             case TK_PERIOD:
                 if (i + 1 < size && body.value[i + 1].type == TK_IDENTIFIER) {
                     body_os << "[u\"" << body.value[i + 1].value << "\"]";
@@ -218,6 +219,28 @@ namespace Lexer {
                 os << "for ";
                 return Body::transpileBlocks(body, size, os, i, {
                     {TK_LPAREN, TK_RPAREN, false},
+                    {TK_LBRACE, TK_RBRACE, true},
+                });
+            case TK_TRY:
+                os << "try ";
+                if (!Body::transpileBlocks(body, size, os, i, {
+                    {TK_LBRACE, TK_RBRACE, true},
+                })) {
+                    return false;
+                }
+                i++;
+                i = eraseEol(body, size, i);
+                if (body.value[i].type != TK_CATCH) {
+                    return false;
+                }
+                os << "catch (JS::Any& ";
+                i+= 2;
+                while (i < size && body.value[i].type != TK_RPAREN) {
+                    os << body.value[i].value;
+                    i++;
+                }
+                os << ") ";
+                return Body::transpileBlocks(body, size, os, i, {
                     {TK_LBRACE, TK_RBRACE, true},
                 });
             default:

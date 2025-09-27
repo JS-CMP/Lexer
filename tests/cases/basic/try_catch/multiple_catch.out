@@ -1,0 +1,6 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {JS::Any x;x=JS::Any(2);try {if (x strictEq JS::Any(1)){throw JS::Any(u"string error");};if (x strictEq JS::Any(2)){throw JS::Any(42);};if (x strictEq JS::Any(3)){throw JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"msg", JS::Any(u"object error")}}));};}catch (JS::Any& e) {console[u"log"](JS::Any(u"Caught:"),e);};}
