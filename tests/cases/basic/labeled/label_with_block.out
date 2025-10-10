@@ -1,0 +1,19 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    for (; ; ) 
+    {
+        console[u"log"](JS::Any(u"loop"));
+myLabel:
+        
+        {
+            console[u"log"](JS::Any(u"start"));
+            break /* label: ; JS_CMP does not support labeled break for now */;
+            console[u"log"](JS::Any(u"end"));
+        }
+    }
+    return 0;
+}

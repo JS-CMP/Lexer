@@ -3,4 +3,25 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a;a=JS::Any(u"Hello");if (a==JS::Any(u"Hello")){}else if (a==JS::Any(u"Hello")){}else {};for (JS::Any v=JS::Any(0);v<JS::Any(10);v++){};while (JS::Any(false)){};do {}while (JS::Any(false));;}
+int main() {
+    JS::Any a, v;
+    a = JS::Any(u"Hello");
+    if (a == JS::Any(u"Hello")) 
+    {
+    } else if (a == JS::Any(u"Hello")) 
+    {
+    } else 
+    {
+    }
+    for (v = JS::Any(0); v < JS::Any(10); v++) 
+    {
+    }
+while (JS::Any(false)) 
+    {
+    }
+    do 
+    {
+    }
+    while (JS::Any(false));
+    return 0;
+}

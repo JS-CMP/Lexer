@@ -3,4 +3,13 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any x, y;x=JS::Any(5);y=JS::Any(10);if (x<JS::Any(10)&&y>JS::Any(5)){console[u"log"](JS::Any(u"Both conditions are true"));};}
+int main() {
+    JS::Any x, y;
+    x = JS::Any(5);
+    y = JS::Any(10);
+    if (x < JS::Any(10) && y > JS::Any(5)) 
+    {
+        console[u"log"](JS::Any(u"Both conditions are true"));
+    }
+    return 0;
+}

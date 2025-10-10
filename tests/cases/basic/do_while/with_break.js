@@ -1,4 +1,4 @@
 do {
-    console.log("Loop running");
-    break;
-} while (true);
+    console.log("Loop running")
+    break
+} while (true)

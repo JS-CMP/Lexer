@@ -1,2 +1,2 @@
 /* Multi-line comment */
-var b = "hello";
+var b = "hello"

@@ -3,4 +3,6 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {}
+int main() {
+    return 0;
+}

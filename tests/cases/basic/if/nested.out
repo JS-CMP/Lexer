@@ -3,4 +3,14 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {if (JS::Any(true)){console[u"log"](JS::Any(u"Outer if"));if (JS::Any(true)){console[u"log"](JS::Any(u"Inner if should run"));};};}
+int main() {
+    if (JS::Any(true)) 
+    {
+        console[u"log"](JS::Any(u"Outer if"));
+        if (JS::Any(true)) 
+        {
+            console[u"log"](JS::Any(u"Inner if should run"));
+        }
+    }
+    return 0;
+}

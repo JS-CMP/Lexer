@@ -3,4 +3,21 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Outer;Outer = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg[u"Foo"]=JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(123);return JS::Any();}));return JS::Any();}));console[u"log"](NEW(NEW(Outer)[u"Foo"]));}
+int main() {
+    JS::Any Outer;
+    Outer = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+        {
+            thisArg[u"Foo"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+                {
+                    return JS::Any(123);
+                }
+                return JS::Any();
+            }, 0, u"Anonymous"));
+        }
+        return JS::Any();
+    }, 0, u"Outer"));
+    console[u"log"](NEW(NEW(Outer)[u"Foo"]));
+    return 0;
+}

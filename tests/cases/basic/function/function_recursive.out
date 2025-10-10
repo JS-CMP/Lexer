@@ -3,4 +3,29 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any b, a;b = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any depth = arguments["0"];a(depth);return JS::Any();}));a = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any depth = arguments["0"];if (depth==JS::Any(0)){console[u"log"](JS::Any(u"depth is 0"));return JS::Any(0);};return b(depth-JS::Any(1));return JS::Any();}));a(JS::Any(3));}
+int main() {
+    JS::Any b, a;
+    b = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any depth = arguments[u"0"];
+
+        {
+            a(depth);
+        }
+        return JS::Any();
+    }, 1, u"b"));
+    a = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any depth = arguments[u"0"];
+
+        {
+            if (depth == JS::Any(0)) 
+            {
+                console[u"log"](JS::Any(u"depth is 0"));
+                return JS::Any(0);
+            }
+            return b(depth - JS::Any(1));
+        }
+        return JS::Any();
+    }, 1, u"a"));
+    a(JS::Any(3));
+    return 0;
+}

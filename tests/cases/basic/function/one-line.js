@@ -1,1 +1,1 @@
-function FooObj(){};
+function FooObj(){}

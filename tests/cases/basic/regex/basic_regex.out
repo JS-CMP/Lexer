@@ -1,0 +1,12 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any a, b, c;
+    a = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"def"), JS::Any(u"")));
+    b = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"def"), JS::Any(u"g")));
+    c = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"def"), JS::Any(u"i")));
+    return 0;
+}

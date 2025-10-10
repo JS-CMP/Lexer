@@ -3,4 +3,14 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {try {throw NEW(Error,JS::Any(u"Something went wrong"));}catch (JS::Any& e) {console[u"log"](JS::Any(u"Caught error:"),e[u"message"]);};}
+int main() {
+    try 
+    {
+        throw NEW(Error, JS::Any(u"Something went wrong"));
+    }
+     catch (JS::Any& e) 
+    {
+        console[u"log"](JS::Any(u"Caught error:"), e[u"message"]);
+    }
+    return 0;
+}

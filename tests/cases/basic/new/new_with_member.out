@@ -3,4 +3,22 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Bar;Bar = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg[u"x"]=JS::Any(42);thisArg[u"get"]=JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return thisArg[u"x"];return JS::Any();}));return JS::Any();}));console[u"log"](NEW(Bar)[u"get"]());}
+int main() {
+    JS::Any Bar;
+    Bar = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+        {
+            thisArg[u"x"] = JS::Any(42);
+            thisArg[u"get"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+                {
+                    return thisArg[u"x"];
+                }
+                return JS::Any();
+            }, 0, u"Anonymous"));
+        }
+        return JS::Any();
+    }, 0, u"Bar"));
+    console[u"log"](NEW(Bar)[u"get"]());
+    return 0;
+}

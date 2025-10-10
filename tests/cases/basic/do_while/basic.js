@@ -1,3 +1,3 @@
 do {
-    console.log("Hello");
-} while (false);
+    console.log("Hello")
+} while (false)

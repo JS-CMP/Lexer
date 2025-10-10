@@ -3,4 +3,16 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {do {console[u"log"](JS::Any(u"Outer loop"));do {console[u"log"](JS::Any(u"Inner loop"));}while (JS::Any(false));}while (JS::Any(false));}
+int main() {
+    do 
+    {
+        console[u"log"](JS::Any(u"Outer loop"));
+        do 
+        {
+            console[u"log"](JS::Any(u"Inner loop"));
+        }
+        while (JS::Any(false));
+    }
+    while (JS::Any(false));
+    return 0;
+}

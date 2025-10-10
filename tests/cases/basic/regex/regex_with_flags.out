@@ -1,0 +1,11 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any emailPattern, phonePattern;
+    emailPattern = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"^[a-z]+@[a-z]+\.[a-z]+$"), JS::Any(u"i")));
+    phonePattern = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"\d{3}-\d{3}-\d{4}"), JS::Any(u"")));
+    return 0;
+}

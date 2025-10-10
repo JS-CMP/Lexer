@@ -1,10 +1,10 @@
 try {
-    console.log("Outer try");
+    console.log("Outer try")
     try {
-        throw "Inner error";
+        throw "Inner error"
     } catch (e) {
-        console.log("Caught inner:", e);
+        console.log("Caught inner:", e)
     }
 } catch (e) {
-    console.log("Caught outer:", e);
+    console.log("Caught outer:", e)
 }

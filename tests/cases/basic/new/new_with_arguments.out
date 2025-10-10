@@ -3,4 +3,22 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Greeter;Greeter = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any name = arguments["0"];thisArg[u"greet"]=JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(u"Hello");return JS::Any();}));return JS::Any();}));console[u"log"](NEW(Greeter,JS::Any(u"World"))[u"greet"]());}
+int main() {
+    JS::Any Greeter;
+    Greeter = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any name = arguments[u"0"];
+
+        {
+            thisArg[u"greet"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+                {
+                    return JS::Any(u"Hello");
+                }
+                return JS::Any();
+            }, 0, u"Anonymous"));
+        }
+        return JS::Any();
+    }, 1, u"Greeter"));
+    console[u"log"](NEW(Greeter, JS::Any(u"World"))[u"greet"]());
+    return 0;
+}

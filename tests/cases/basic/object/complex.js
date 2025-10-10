@@ -25,4 +25,4 @@ var person = {
         twitter: "@johndoe",
         linkedin: "linkedin.com/in/johndoe"
     }
-};
+}

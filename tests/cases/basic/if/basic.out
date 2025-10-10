@@ -3,4 +3,14 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {if (JS::Any(true)){console[u"log"](JS::Any(u"This should always run"));};if (JS::Any(false)){console[u"log"](JS::Any(u"This should never run"));};}
+int main() {
+    if (JS::Any(true)) 
+    {
+        console[u"log"](JS::Any(u"This should always run"));
+    }
+    if (JS::Any(false)) 
+    {
+        console[u"log"](JS::Any(u"This should never run"));
+    }
+    return 0;
+}

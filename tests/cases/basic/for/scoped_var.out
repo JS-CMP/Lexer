@@ -3,4 +3,12 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {for (JS::Any i=JS::Any(0);i<JS::Any(3);i++){JS::Any x;x=i*JS::Any(2);console[u"log"](x);};}
+int main() {
+    JS::Any i, x;
+    for (i = JS::Any(0); i < JS::Any(3); i++) 
+    {
+        x = i * JS::Any(2);
+        console[u"log"](x);
+    }
+    return 0;
+}

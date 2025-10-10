@@ -1,0 +1,27 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any a;
+    a = JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{
+        JS::Any(1),
+        JS::Any(2),
+        JS::Any(3)
+    }));
+    {
+        // for-in loop transpiled by JS_CMP not optimize for now
+        JS::Any _js_cmp_keys0 = JS::Object::keys(Object, JS::Arguments::CreateArgumentsObject(std::vector<JS::Any>{a}));
+        size_t _js_cmp_keys_len0 = static_cast<size_t>(std::get<double>(_js_cmp_keys0[u"length"].getValue()));
+        for (size_t _js_cmp_i0 = 0; _js_cmp_i0 < _js_cmp_keys_len0; _js_cmp_i0++) 
+        {
+            JS::Any i = _js_cmp_keys0[std::to_string(_js_cmp_i0)];
+
+            {
+                console[u"log"](i, a[i]);
+            }
+        }
+    }
+    return 0;
+}

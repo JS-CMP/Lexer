@@ -1,2 +1,2 @@
-var a = true;
-var b = false;
+var a = true
+var b = false

@@ -1,5 +1,5 @@
 try {
-    throw new Error("Something went wrong");
+    throw new Error("Something went wrong")
 } catch (e) {
-    console.log("Caught error:", e.message);
+    console.log("Caught error:", e.message)
 }

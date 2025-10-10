@@ -3,4 +3,22 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {try {console[u"log"](JS::Any(u"Outer try"));try {throw JS::Any(u"Inner error");}catch (JS::Any& e) {console[u"log"](JS::Any(u"Caught inner:"),e);};}catch (JS::Any& e) {console[u"log"](JS::Any(u"Caught outer:"),e);};}
+int main() {
+    try 
+    {
+        console[u"log"](JS::Any(u"Outer try"));
+        try 
+        {
+            throw JS::Any(u"Inner error");
+        }
+         catch (JS::Any& e) 
+        {
+            console[u"log"](JS::Any(u"Caught inner:"), e);
+        }
+    }
+     catch (JS::Any& e) 
+    {
+        console[u"log"](JS::Any(u"Caught outer:"), e);
+    }
+    return 0;
+}

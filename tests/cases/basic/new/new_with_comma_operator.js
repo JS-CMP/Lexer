@@ -1,5 +1,5 @@
 function Foo() {
-    this.value = 10;
+    this.value = 10
 }
 
-console.log(new (0, Foo)()); // NEW((0, Foo))
+console.log(new (0, Foo)()) // NEW((0, Foo))

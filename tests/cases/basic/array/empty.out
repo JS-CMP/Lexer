@@ -3,4 +3,11 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a;a=JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{JS::Any(), JS::Any(), JS::Any()}));}
+int main() {
+    JS::Any a;
+    a = JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{
+        JS::Any(),
+        JS::Any()
+    }));
+    return 0;
+}
