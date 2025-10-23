@@ -45,13 +45,13 @@ std::ostringstream& RegularExpression::transpile(std::ostringstream& os, std::os
     } else if (pattern.size() >= 2 && pattern.front() == '/' && pattern.back() == '/') {
         pattern = pattern.substr(1, pattern.size() - 2);
     }
-    os << "JS::Any(std::make_shared<JS::RegExp>(JS::Any(u\"" << pattern << "\"), JS::Any(u\"" << flags << "\")))";
+    os << "JS::Any(JS::InternalObject::create<JS::RegExp>(JS::Any(u\"" << pattern << "\"), JS::Any(u\"" << flags << "\")))";
     return os;
 }
 
 
 std::ostringstream& Array::transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const {
-    os << "JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{\n";
+    os << "JS::Any(JS::InternalObject::create<JS::Array>(std::vector<JS::Any>{\n";
     for (size_t i = 0; i < elements.size(); ++i) {
         if (i > 0)
             os << ",\n";
@@ -63,7 +63,7 @@ std::ostringstream& Array::transpile(std::ostringstream& os, std::ostringstream&
 }
 
 std::ostringstream& Object::transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const {
-    os << "JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{\n";
+    os << "JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{\n";
     for (size_t i = 0; i < properties.size(); ++i) {
         if (i > 0)
             os << ",\n";
@@ -186,7 +186,7 @@ std::ostringstream& CallExpr::transpile(std::ostringstream& os, std::ostringstre
 }
 
 std::ostringstream& FunctionExpr::transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const {
-    os << "JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {\n";
+    os << "JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {\n";
     for (size_t i = 0; i < params.size(); i++) {
         os << std::string(indent + 4, ' ') << "JS::Any " << params[i] << " = arguments[u\"" << i << "\"];\n";
     }
@@ -422,7 +422,7 @@ std::ostringstream& TryStmt::transpile(std::ostringstream& os, std::ostringstrea
 
 std::ostringstream& FunctionDecl::transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const {
     vars << name << ", ";
-    os << std::string(indent, ' ') << name << " = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {\n";
+    os << std::string(indent, ' ') << name << " = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {\n";
     for (size_t i = 0; i < params.size(); i++) {
         os << std::string(indent + 4, ' ') << "JS::Any " << params[i] << " = arguments[u\"" << i << "\"];\n";
     }
