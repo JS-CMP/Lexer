@@ -3,7 +3,6 @@
 #include <fstream>
 #include "../include/Tokenizer/Lexer.hpp"
 #include "../include/AST/Parser.hpp"
-#include "../include/Program.hpp"
 #include "Optimization/Optimizer.hpp"
 
 #include <cstdlib>
