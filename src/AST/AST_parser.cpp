@@ -201,6 +201,7 @@ Stmt::Ptr BlockStmt::parse(Parser& parser) {
         body.push_back(parser.parseStatement());
     }
     parser.consume(TK_RBRACE, "BlockStmt", "Expected '}' at end of block.");
+    parser.match(TK_SEMICOLON); // optional semicolon after block
     return std::make_unique<BlockStmt>(std::move(body));
 }
 
