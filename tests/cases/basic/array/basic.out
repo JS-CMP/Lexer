@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any array;
-    array = JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{
+    array = JS::Any(JS::InternalObject::create<JS::Array>(std::vector<JS::Any>{
         JS::Any(),
         JS::Any(nullptr),
         JS::Any(true),

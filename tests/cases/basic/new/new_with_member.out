@@ -5,11 +5,11 @@
 
 int main() {
     JS::Any Bar;
-    Bar = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    Bar = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
         {
             thisArg[u"x"] = JS::Any(42);
-            thisArg[u"get"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+            thisArg[u"get"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
                 {
                     return thisArg[u"x"];

@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any multiFlag, allFlags;
-    multiFlag = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"test"), JS::Any(u"gm")));
-    allFlags = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"pattern"), JS::Any(u"gi")));
+    multiFlag = JS::Any(JS::InternalObject::create<JS::RegExp>(JS::Any(u"test"), JS::Any(u"gm")));
+    allFlags = JS::Any(JS::InternalObject::create<JS::RegExp>(JS::Any(u"pattern"), JS::Any(u"gi")));
     return 0;
 }

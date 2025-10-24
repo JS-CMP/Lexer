@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any object;
-    object = JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+    object = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
         {u"key", JS::Any(u"value")}
     }));
     return 0;

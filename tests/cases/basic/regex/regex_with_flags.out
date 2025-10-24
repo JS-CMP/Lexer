@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any emailPattern, phonePattern;
-    emailPattern = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"^[a-z]+@[a-z]+\.[a-z]+$"), JS::Any(u"i")));
-    phonePattern = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"\d{3}-\d{3}-\d{4}"), JS::Any(u"")));
+    emailPattern = JS::Any(JS::InternalObject::create<JS::RegExp>(JS::Any(u"^[a-z]+@[a-z]+\.[a-z]+$"), JS::Any(u"i")));
+    phonePattern = JS::Any(JS::InternalObject::create<JS::RegExp>(JS::Any(u"\d{3}-\d{3}-\d{4}"), JS::Any(u"")));
     return 0;
 }

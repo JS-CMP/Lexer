@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any escaped, special;
-    escaped = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"\d+\.\d+"), JS::Any(u"")));
-    special = JS::Any(std::make_shared<JS::RegExp>(JS::Any(u"[\/\*\+\?]"), JS::Any(u"")));
+    escaped = JS::Any(JS::InternalObject::create<JS::RegExp>(JS::Any(u"\d+\.\d+"), JS::Any(u"")));
+    special = JS::Any(JS::InternalObject::create<JS::RegExp>(JS::Any(u"[\/\*\+\?]"), JS::Any(u"")));
     return 0;
 }

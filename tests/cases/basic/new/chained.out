@@ -6,13 +6,13 @@
 int main() {
     JS::Any x, MyNS;
     x = JS::Any(u"component");
-    MyNS = JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+    MyNS = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
 
     }));
-    MyNS[u"Widget"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    MyNS[u"Widget"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
         {
-            thisArg[u"init"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+            thisArg[u"init"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
                 JS::Any x = arguments[u"0"];
 
                 {
@@ -21,7 +21,7 @@ int main() {
                 }
                 return JS::Any();
             }, 1, u"Anonymous"));
-            thisArg[u"render"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+            thisArg[u"render"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
                 {
                     return JS::Any(u"Rendered ") + thisArg[u"x"];

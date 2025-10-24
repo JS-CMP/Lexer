@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any func;
-    func = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    func = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
         {
         }

@@ -5,14 +5,14 @@
 
 int main() {
     JS::Any A, B, useA;
-    A = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    A = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
         {
             thisArg[u"name"] = JS::Any(u"A");
         }
         return JS::Any();
     }, 0, u"A"));
-    B = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    B = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
         {
             thisArg[u"name"] = JS::Any(u"B");

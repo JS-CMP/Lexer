@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any a;
-    a = JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{
+    a = JS::Any(JS::InternalObject::create<JS::Array>(std::vector<JS::Any>{
         JS::Any(1),
         JS::Any(2),
         JS::Any(3)

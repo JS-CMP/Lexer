@@ -5,7 +5,7 @@
 
 int main() {
     JS::Any Test262Error, $DONOTEVALUATE;
-    Test262Error = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    Test262Error = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
         JS::Any message = arguments[u"0"];
 
         {
@@ -13,14 +13,14 @@ int main() {
         }
         return JS::Any();
     }, 1, u"Test262Error"));
-    Test262Error[u"prototype"][u"toString"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    Test262Error[u"prototype"][u"toString"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
         {
             return JS::Any(u"Test262Error: ") + thisArg[u"message"];
         }
         return JS::Any();
     }, 0, u"Anonymous"));
-    Test262Error[u"thrower"] = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    Test262Error[u"thrower"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
         JS::Any message = arguments[u"0"];
 
         {
@@ -28,7 +28,7 @@ int main() {
         }
         return JS::Any();
     }, 1, u"Anonymous"));
-    $DONOTEVALUATE = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+    $DONOTEVALUATE = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
 
         {
             throw JS::Any(u"Test262: This statement should not be evaluated.");

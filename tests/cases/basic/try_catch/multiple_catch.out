@@ -18,7 +18,7 @@ int main() {
         }
         if (x strictEq JS::Any(3)) 
         {
-            throw JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+            throw JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
                 {u"msg", JS::Any(u"object error")}
             }));
         }
