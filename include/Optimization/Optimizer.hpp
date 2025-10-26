@@ -14,7 +14,7 @@ using flag_t = uint32_t;
 
 class Optimizer {
 public:
-    Optimizer(std::vector<AST::Stmt::Ptr>& ast);
+    explicit Optimizer(std::vector<AST::Stmt::Ptr>& ast);
 
     void optimize(flag_t flags);
     std::string transpile() const;
