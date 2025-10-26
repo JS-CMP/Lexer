@@ -121,7 +121,7 @@ enum TokenType {
     TOKENS(GENERATE_ENUM)
 };
 
-static constexpr std::array<const char*, TK_NUM_TOKENS + 1> TokenString = {
+static constexpr std::array<const char*, TK_NUM_TOKENS + 1> TokenName = {
     TOKENS(GENERATE_STRING)
 };
 
