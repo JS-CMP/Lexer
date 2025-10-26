@@ -2,10 +2,11 @@
 #define JS_CMP_LEXER_PARSER_HPP
 #include "Node.hpp"
 #include "../Tokenizer/Token.hpp"
+#include <functional>
 
 
 // Green for __FUNCTION__ / __CLASS__ / __LINE__ , blue for token info
-#define DEBUG_PARSER(token) std::cout << "\033[1;32mIn " << __FUNCTION__ << " at line " << __LINE__ << ":\033[0m " \
+#define DEBUG_PARSER(token) std::cout << "\033[1;32mIn " << __PRETTY_FUNCTION__ << " at line " << __LINE__ << ":\033[0m " \
                                    << "\033[1;34mToken: '" << token.value << "' Type: " << TokenName[token.type] \
                                    << " Line: " << token.line << " Col: " << token.column << "\033[0m\n";
 
