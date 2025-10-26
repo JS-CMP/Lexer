@@ -3,4 +3,8 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a;a=JS::Any(nullptr);}
+int main() {
+    JS::Any a;
+    a = JS::Any(nullptr);
+    return 0;
+}

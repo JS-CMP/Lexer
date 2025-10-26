@@ -1,3 +1,3 @@
-var a = "hello";
-var b = 'world';
-var c = 'escape \"quotes\"';
+var a = "hello"
+var b = 'world'
+var c = 'escape "quotes"'

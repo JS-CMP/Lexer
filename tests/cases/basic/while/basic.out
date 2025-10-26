@@ -3,4 +3,12 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any i;i=JS::Any(0);while (i<JS::Any(5)){i++;};}
+int main() {
+    JS::Any i;
+    i = JS::Any(0);
+while (i < JS::Any(5)) 
+    {
+        i++;
+    }
+    return 0;
+}

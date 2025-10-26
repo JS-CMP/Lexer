@@ -1,0 +1,24 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    try 
+    {
+        try 
+        {
+            throw JS::Any(u"inner error");
+        }
+         catch (JS::Any& e) 
+        {
+            console[u"log"](JS::Any(u"Caught inner:"), e);
+            throw e;
+        }
+    }
+     catch (JS::Any& e) 
+    {
+        console[u"log"](JS::Any(u"Caught outer:"), e);
+    }
+    return 0;
+}

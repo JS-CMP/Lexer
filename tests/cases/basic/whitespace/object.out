@@ -3,4 +3,15 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any obj, arr;obj=JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"key", JS::Any("value")}}));arr=JS::Any(std::make_shared<JS::Array>(std::vector<JS::Any>{JS::Any(1), JS::Any(2), JS::Any(3)}));}
+int main() {
+    JS::Any obj, arr;
+    obj = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+        {u"key", JS::Any(u"value")}
+    }));
+    arr = JS::Any(JS::InternalObject::create<JS::Array>(std::vector<JS::Any>{
+        JS::Any(1),
+        JS::Any(2),
+        JS::Any(3)
+    }));
+    return 0;
+}

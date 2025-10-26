@@ -1,2 +1,2 @@
 // Block comment within code
-var f = /* comment */ "world";
+var f = /* comment */ "world"

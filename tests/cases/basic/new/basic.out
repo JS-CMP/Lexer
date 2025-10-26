@@ -3,4 +3,25 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Foo, a, b, c;Foo = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {JS::Any a = arguments["0"];JS::Any b = arguments["1"];JS::Any c = arguments["2"];thisArg["a"]=a;thisArg["b"]=b;thisArg["c"]=c;return JS::Any();}));a=JS::Any(1);b=JS::Any(2);c=JS::Any(3);NEW(Foo);NEW(Foo);console["log"](NEW(Foo,a,b,c));}
+int main() {
+    JS::Any Foo, a, b, c;
+    Foo = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any a = arguments[u"0"];
+        JS::Any b = arguments[u"1"];
+        JS::Any c = arguments[u"2"];
+
+        {
+            thisArg[u"a"] = a;
+            thisArg[u"b"] = b;
+            thisArg[u"c"] = c;
+        }
+        return JS::Any();
+    }, 3, u"Foo"));
+    a = JS::Any(1);
+    b = JS::Any(2);
+    c = JS::Any(3);
+    NEW(Foo);
+    NEW(Foo);
+    console[u"log"](NEW(Foo, a , b , c));
+    return 0;
+}

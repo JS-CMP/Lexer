@@ -1,0 +1,31 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any a, b;
+    a = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+        {u"a", JS::Any(1)},
+        {u"b", JS::Any(2)},
+        {u"c", JS::Any(3)}
+    }));
+    b = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+        {u"a", JS::Any(1)},
+        {u"b", JS::Any(nullptr)}
+    }));
+    {
+        // for-in loop transpiled by JS_CMP not optimize for now
+        JS::Any _js_cmp_keys1 = JS::Object::keys(Object, JS::Arguments::CreateArgumentsObject(std::vector<JS::Any>{a}));
+        size_t _js_cmp_keys_len1 = static_cast<size_t>(std::get<double>(_js_cmp_keys1[u"length"].getValue()));
+        for (size_t _js_cmp_i1 = 0; _js_cmp_i1 < _js_cmp_keys_len1; _js_cmp_i1++) 
+        {
+            b = _js_cmp_keys1[std::to_string(_js_cmp_i1)];
+
+            {
+                console[u"log"](b[u"a"], a[b[u"a"]]);
+            }
+        }
+    }
+    return 0;
+}

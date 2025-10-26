@@ -1,2 +1,2 @@
-var a = "Hello";
-var array = [a];
+var a = "Hello"
+var array = [a]

@@ -1,7 +1,7 @@
 function Greeter(name) {
     this.greet = function () {
-        return "Hello";
-    };
+        return "Hello"
+    }
 }
 
-console.log(new Greeter("World").greet()); // NEW(Greeter, "World").greet();
+console.log(new Greeter("World").greet()) // NEW(Greeter, "World").greet()

@@ -1,0 +1,22 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any i, j;
+outer:
+        for (i = JS::Any(0); i < JS::Any(3); i++) 
+    {
+inner:
+                for (j = JS::Any(0); j < JS::Any(3); j++) 
+        {
+            if (i strictEq JS::Any(1) && j strictEq JS::Any(1)) 
+            {
+                break /* label: ; JS_CMP does not support labeled break for now */;
+            }
+            console[u"log"](i, j);
+        }
+    }
+    return 0;
+}

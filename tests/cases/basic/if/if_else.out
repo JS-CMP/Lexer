@@ -3,4 +3,13 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {if (JS::Any(false)){console["log"](JS::Any("False block"));}else {console["log"](JS::Any("Else block should run"));};}
+int main() {
+    if (JS::Any(false)) 
+    {
+        console[u"log"](JS::Any(u"False block"));
+    } else 
+    {
+        console[u"log"](JS::Any(u"Else block should run"));
+    }
+    return 0;
+}

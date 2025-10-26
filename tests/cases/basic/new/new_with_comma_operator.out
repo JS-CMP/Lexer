@@ -3,4 +3,15 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Foo;Foo = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {thisArg["value"]=JS::Any(10);return JS::Any();}));console["log"](NEW((JS::Any(0),Foo)));}
+int main() {
+    JS::Any Foo;
+    Foo = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+        {
+            thisArg[u"value"] = JS::Any(10);
+        }
+        return JS::Any();
+    }, 0, u"Foo"));
+    console[u"log"](NEW((JS::Any(0) , Foo)));
+    return 0;
+}

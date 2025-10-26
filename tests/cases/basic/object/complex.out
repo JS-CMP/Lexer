@@ -3,4 +3,35 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any person;person=JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"firstName", JS::Any("John")},{u"lastName", JS::Any("Doe")},{u"age", JS::Any(30)},{u"address", JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"street", JS::Any("123 Main St")},{u"city", JS::Any("Anytown")},{u"state", JS::Any("CA")},{u"zipCode", JS::Any("12345")}}))},{u"contactInfo", JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"email", JS::Any("john.doe@example.com")},{u"phone", JS::Any("555-123-4567")}}))},{u"isEmployed", JS::Any(true)},{u"job", JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"title", JS::Any("Software Engineer")},{u"company", JS::Any("TechCorp")},{u"location", JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"city", JS::Any("Silicon Valley")},{u"state", JS::Any("CA")}}))}}))},{u"socialMedia", JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"twitter", JS::Any("@johndoe")},{u"linkedin", JS::Any("linkedin.com/in/johndoe")}}))}}));}
+int main() {
+    JS::Any person;
+    person = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+        {u"firstName", JS::Any(u"John")},
+        {u"lastName", JS::Any(u"Doe")},
+        {u"age", JS::Any(30)},
+        {u"address", JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+            {u"street", JS::Any(u"123 Main St")},
+            {u"city", JS::Any(u"Anytown")},
+            {u"state", JS::Any(u"CA")},
+            {u"zipCode", JS::Any(u"12345")}
+        }))},
+        {u"contactInfo", JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+            {u"email", JS::Any(u"john.doe@example.com")},
+            {u"phone", JS::Any(u"555-123-4567")}
+        }))},
+        {u"isEmployed", JS::Any(true)},
+        {u"job", JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+            {u"title", JS::Any(u"Software Engineer")},
+            {u"company", JS::Any(u"TechCorp")},
+            {u"location", JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+                {u"city", JS::Any(u"Silicon Valley")},
+                {u"state", JS::Any(u"CA")}
+            }))}
+        }))},
+        {u"socialMedia", JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+            {u"twitter", JS::Any(u"@johndoe")},
+            {u"linkedin", JS::Any(u"linkedin.com/in/johndoe")}
+        }))}
+    }));
+    return 0;
+}

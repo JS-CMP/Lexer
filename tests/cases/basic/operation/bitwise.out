@@ -3,4 +3,15 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a, b, c, d, e, f, g;a=JS::Any(5)&JS::Any(3);b=JS::Any(5)|JS::Any(3);c=JS::Any(5)^JS::Any(3);d=~JS::Any(5);e=JS::Any(5)<<JS::Any(1);f=JS::Any(5)>>JS::Any(1);g=JS::Any(5) URightShift JS::Any(1);console["log"](a,b,c,d,e,f);}
+int main() {
+    JS::Any a, b, c, d, e, f, g;
+    a = JS::Any(5) & JS::Any(3);
+    b = JS::Any(5) | JS::Any(3);
+    c = JS::Any(5) ^ JS::Any(3);
+    d = ~JS::Any(5);
+    e = JS::Any(5) << JS::Any(1);
+    f = JS::Any(5) >> JS::Any(1);
+    g = JS::Any(5) URightShift JS::Any(1);
+    console[u"log"](a, b, c, d, e, f);
+    return 0;
+}

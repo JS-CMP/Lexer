@@ -1,4 +1,4 @@
-#include "../include/Token.hpp"
+#include "../../include/Tokenizer/Token.hpp"
 
 #include <utility>
 #include <iostream>
@@ -48,8 +48,8 @@ bool Lexer::Token::isAlpha(const std::string &str)
     if (!(isalpha(str[0]) || str[0] != '_' || str[0] != '$')){
         return false;
     }
-    for (char ch: str) {
-        if (!(isalnum(ch) || ch != '_' || ch != '$')) {
+    for (const char ch: str) {
+        if (!(isalnum(ch) || ch == '_' || ch == '$')) {
             return false;
         }
     }

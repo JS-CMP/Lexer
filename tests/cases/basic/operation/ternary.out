@@ -3,4 +3,10 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any a, b;a=JS::Any(5)>JS::Any(3)?JS::Any("Yes"):JS::Any("No");b=JS::Any(5)<JS::Any(3)?JS::Any("Yes"):JS::Any("No");console["log"](a,b);}
+int main() {
+    JS::Any a, b;
+    a = JS::Any(5) > JS::Any(3) ? JS::Any(u"Yes") : JS::Any(u"No");
+    b = JS::Any(5) < JS::Any(3) ? JS::Any(u"Yes") : JS::Any(u"No");
+    console[u"log"](a, b);
+    return 0;
+}

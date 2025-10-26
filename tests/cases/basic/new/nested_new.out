@@ -3,4 +3,25 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any Foo, x;Foo = JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {return JS::Any(std::make_shared<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {console["log"](JS::Any("Inside Foo"));return JS::Any("Hello, World!");return JS::Any();}));return JS::Any();}));x=JS::Any(123);NEW(NEW(Foo));NEW((NEW(Foo)),x);console["log"](NEW(NEW(Foo,x),x));}
+int main() {
+    JS::Any Foo, x;
+    Foo = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+        {
+            return JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+                {
+                    console[u"log"](JS::Any(u"Inside Foo"));
+                    return JS::Any(u"Hello, World!");
+                }
+                return JS::Any();
+            }, 0, u"Anonymous"));
+        }
+        return JS::Any();
+    }, 0, u"Foo"));
+    x = JS::Any(123);
+    NEW(NEW(Foo));
+    NEW((NEW(Foo)), x);
+    console[u"log"](NEW(NEW(Foo, x), x));
+    return 0;
+}

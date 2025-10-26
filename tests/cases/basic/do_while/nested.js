@@ -1,6 +1,6 @@
 do {
-    console.log("Outer loop");
+    console.log("Outer loop")
     do {
-        console.log("Inner loop");
-    } while (false);
-} while (false);
+        console.log("Inner loop")
+    } while (false)
+} while (false)

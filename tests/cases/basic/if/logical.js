@@ -1,5 +1,5 @@
 if (true && false) {
-    console.log("Should not run");
+    console.log("Should not run")
 } else if (true || false) {
-    console.log("Should run");
+    console.log("Should run")
 }

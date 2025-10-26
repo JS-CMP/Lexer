@@ -1,0 +1,19 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any func;
+    func = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+
+        {
+        }
+        return JS::Any();
+    }, 0, u"Anonymous"));
+    if (func instanceof Function) 
+    {
+        console[u"log"](JS::Any(u"func is a function"));
+    }
+    return 0;
+}

@@ -3,4 +3,15 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any i;i=JS::Any(0);do {i++;if (i==JS::Any(2))continue;console["log"](i);}while (i<JS::Any(3));}
+int main() {
+    JS::Any i;
+    i = JS::Any(0);
+    do 
+    {
+        i++;
+        if (i == JS::Any(2))         continue;
+        console[u"log"](i);
+    }
+    while (i < JS::Any(3));
+    return 0;
+}

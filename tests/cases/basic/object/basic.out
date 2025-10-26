@@ -3,4 +3,20 @@
 #include "types/objects/Types.hpp"
 #include "customOperators/CustomOperators.hpp"
 
-int main() {JS::Any object;object=JS::Any(std::make_shared<JS::Object>(std::unordered_map<std::u16string, JS::Any>{{u"a", JS::Any()},{u"b", JS::Any(nullptr)},{u"c", JS::Any(true)},{u"d", JS::Any(false)},{u"e", JS::Any(0)},{u"f", JS::Any(1)},{u"g", JS::Any(1.1)},{u"h", JS::Any("a")},{u"i", JS::Any("")},{u"v", JS::Any("a")},{u"w", JS::Any("")}}));}
+int main() {
+    JS::Any object;
+    object = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+        {u"a", JS::Any()},
+        {u"b", JS::Any(nullptr)},
+        {u"c", JS::Any(true)},
+        {u"d", JS::Any(false)},
+        {u"e", JS::Any(0)},
+        {u"f", JS::Any(1)},
+        {u"g", JS::Any(1.1)},
+        {u"h", JS::Any(u"a")},
+        {u"i", JS::Any(u"")},
+        {u"v", JS::Any(u"a")},
+        {u"w", JS::Any(u"")}
+    }));
+    return 0;
+}
