@@ -121,7 +121,7 @@ std::ostringstream& UnaryExpr::transpile(std::ostringstream& os, std::ostringstr
     };
     if (op == "void")
         os << "(";
-    os << (opMap.contains(op) ? opMap.at(op) : op);
+    os << (opMap.contains(op) ? opMap.at(op) : op) << " ";
     expr->transpile(os, vars, indent);
     if (op == "void")
         os << ")";
