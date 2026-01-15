@@ -1,0 +1,108 @@
+name: Coverage Analysis
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  coverage-analysis:
+    name: Coverage Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lcov gcovr
+
+    - name: Configure CMake with coverage
+      run: cmake -DENABLE_COVERAGE=ON -B build
+
+    - name: Build project
+      run: cmake --build build
+
+    - name: Run tests with coverage
+      run: ./build/JS_CMP_LEXER_test
+
+    - name: Generate coverage reports
+      run: |
+        mkdir -p build/reports
+        # Generate coverage reports (fallback if coverage tools not available)
+        ./build/JS_CMP_LEXER_test
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-reports
+        path: build/reports/
+
+    - name: Display test summary
+      run: |
+        echo "=== TEST COVERAGE SUMMARY ==="
+        echo "Reports available in coverage-reports artifact"
+        echo "Markdown report: build/reports/test_coverage.md"
+        echo "HTML report: build/reports/coverage_report.html"
+        echo "XML report: build/reports/coverage_report.xml"
+
+  test-validation:
+    name: Test Validation
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        brew install lcov gcovr
+
+    - name: Configure CMake with coverage
+      run: cmake -DENABLE_COVERAGE=ON -B build
+
+    - name: Build project
+      run: cmake --build build
+
+    - name: Run tests
+      run: ./build/JS_CMP_LEXER_test
+
+    - name: Verify reports generated
+      run: |
+        ls -la build/reports/
+        echo "Test coverage report:"
+        cat build/reports/test_coverage.md
+
+  coverage-tools-check:
+    name: Coverage Tools Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check coverage tools availability
+      run: |
+        echo "Checking coverage tools..."
+        which lcov || echo "lcov not found"
+        which gcovr || echo "gcovr not found"
+        which gcov || echo "gcov not found"
+
+    - name: Install coverage tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lcov
+        pip install gcovr
+
+    - name: Verify installation
+      run: |
+        lcov --version
+        gcovr --version
+        gcov --version

@@ -135,7 +135,23 @@ Lexer::Token Lexer::Lexer::nextToken() {
     }
 
     // Regex
-    if (ch == '/' && this->cursor + 1 < this->content.size() && this->content[this->cursor + 1] != '/' && this->content[this->cursor + 1] != '*') {
+    if (ch == '/' && this->cursor + 1 < this->content.size() && this->content[this->cursor + 1] != '/') {
+        size_t temp_cursor = this->cursor;
+        while (this->cursor > 0 && Token::isSkippable(this->content[this->cursor - 1])) {
+            this->cursor--;
+        }
+        if (this->cursor > 0) {
+            char prev_char = this->content[this->cursor - 1];
+            if (isalnum(prev_char) || prev_char == ')' || prev_char == ']' || prev_char == '}') {
+                this->cursor = temp_cursor;
+                // Not a regex, it's a division operator
+                this->cursor++;
+                return {std::string(1, '/'), TK_DIV, this->line, (this->cursor - this->start_of_line) - 1};
+            }
+        } else {
+            this->cursor = temp_cursor;
+        }
+
         std::string value;
         size_t backslash = 0;
         this->cursor++;

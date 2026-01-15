@@ -118,7 +118,13 @@ void BlockStmt::print(size_t indent) const {
 }
 
 void VarDecl::print(size_t indent) const {
-    std::cout << std::string(indent, ' ') << "VarDecl(" << name << ")\n";
+    std::cout << std::string(indent, ' ') << "VarDecl(";
+    for (size_t i = 0; i < names.size(); ++i) {
+        if (i > 0)
+            std::cout << ", ";
+        std::cout << names[i];
+    }
+    std::cout << ")\n";
     if (init) {
         init->print(indent + 2);
     } else {
