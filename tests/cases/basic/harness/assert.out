@@ -1,0 +1,243 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any assert, expectedName, actualName, isPrimitive, result, format, compareArray, i, JSON, type, basic;
+    assert = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any mustBeTrue = arguments[u"0"];
+        JS::Any message = arguments[u"1"];
+
+        {
+            if (mustBeTrue strictEq JS::Any(true))
+            {
+                return;
+            }
+            if (message strictEq JS::Any())
+            {
+                message = JS::Any(u"Expected true but got ") + assert[u"_toString"](mustBeTrue);
+            }
+            throw NEW(Test262Error, message);
+        }
+        return JS::Any();
+    }, 2, u"assert"));
+    assert[u"_isSameValue"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any a = arguments[u"0"];
+        JS::Any b = arguments[u"1"];
+
+        {
+            if (a strictEq b)
+            {
+                return a strictNeq JS::Any(0) || JS::Any(1) / a strictEq JS::Any(1) / b;
+            }
+            return a strictNeq a && b strictNeq b;
+        }
+        return JS::Any();
+    }, 2, u"Anonymous"));
+    assert[u"sameValue"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any actual = arguments[u"0"];
+        JS::Any expected = arguments[u"1"];
+        JS::Any message = arguments[u"2"];
+
+        {
+            try
+            {
+                if (assert[u"_isSameValue"](actual, expected))
+                {
+                    return;
+                }
+            }
+             catch (JS::Any& error)
+            {
+                throw NEW(Test262Error, message + JS::Any(u" (_isSameValue operation threw) ") + error);
+                return;
+            }
+            if (message strictEq JS::Any())
+            {
+                message = JS::Any(u"");
+            } else
+            {
+                message = message + JS::Any(u" ");
+            }
+            message = message + JS::Any(u"Expected SameValue(«") + assert[u"_toString"](actual) + JS::Any(u"», «") + assert[u"_toString"](expected) + JS::Any(u"») to be true");
+            throw NEW(Test262Error, message);
+        }
+        return JS::Any();
+    }, 3, u"Anonymous"));
+    assert[u"notSameValue"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any actual = arguments[u"0"];
+        JS::Any unexpected = arguments[u"1"];
+        JS::Any message = arguments[u"2"];
+
+        {
+            if (!assert[u"_isSameValue"](actual, unexpected))
+            {
+                return;
+            }
+            if (message strictEq JS::Any())
+            {
+                message = JS::Any(u"");
+            } else
+            {
+                message = message + JS::Any(u" ");
+            }
+            message = message + JS::Any(u"Expected SameValue(«") + assert[u"_toString"](actual) + JS::Any(u"», «") + assert[u"_toString"](unexpected) + JS::Any(u"») to be false");
+            throw NEW(Test262Error, message);
+        }
+        return JS::Any();
+    }, 3, u"Anonymous"));
+    assert[u"throws"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any expectedErrorConstructor = arguments[u"0"];
+        JS::Any func = arguments[u"1"];
+        JS::Any message = arguments[u"2"];
+
+        {
+            if (typeOf func strictNeq JS::Any(u"function"))
+            {
+                throw NEW(Test262Error, JS::Any(u"assert.throws requires two arguments: the error constructor ") + JS::Any(u"and a function to run"));
+                return;
+            }
+            if (message strictEq JS::Any())
+            {
+                message = JS::Any(u"");
+            } else
+            {
+                message = message + JS::Any(u" ");
+            }
+            try
+            {
+                func();
+            }
+             catch (JS::Any& thrown)
+            {
+                if (typeOf thrown strictNeq JS::Any(u"object") || thrown strictEq JS::Any(nullptr))
+                {
+                    message = message + JS::Any(u"Thrown value was not an object!");
+                    throw NEW(Test262Error, message);
+                } else if (thrown[u"constructor"] strictNeq expectedErrorConstructor)
+                {
+                    expectedName = expectedErrorConstructor[u"name"];
+                    actualName = thrown[u"constructor"][u"name"];
+                    if (expectedName strictEq actualName)
+                    {
+                        message = message + JS::Any(u"Expected a ") + expectedName + JS::Any(u" but got a different error constructor with the same name");
+                    } else
+                    {
+                        message = message + JS::Any(u"Expected a ") + expectedName + JS::Any(u" but got a ") + actualName;
+                    }
+                    throw NEW(Test262Error, message);
+                }
+                return;
+            }
+            message = message + JS::Any(u"Expected a ") + expectedErrorConstructor[u"name"] + JS::Any(u" to be thrown but no exception was thrown at all");
+            throw NEW(Test262Error, message);
+        }
+        return JS::Any();
+    }, 3, u"Anonymous"));
+    isPrimitive = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any value = arguments[u"0"];
+
+        {
+            return !value || (typeOf value strictNeq JS::Any(u"object") && typeOf value strictNeq JS::Any(u"function"));
+        }
+        return JS::Any();
+    }, 1, u"isPrimitive"));
+    assert[u"compareArray"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any actual = arguments[u"0"];
+        JS::Any expected = arguments[u"1"];
+        JS::Any message = arguments[u"2"];
+
+        {
+            message = message strictEq JS::Any() ? JS::Any(u"") : message;
+            if (typeOf message strictEq JS::Any(u"symbol"))
+            {
+                message = message[u"toString"]();
+            }
+            if (isPrimitive(actual))
+            {
+                assert(JS::Any(false), JS::Any(u"Actual argument [") + actual + JS::Any(u"] shouldn\'t be primitive. ") + message + JS::Any(u""));
+            } else if (isPrimitive(expected))
+            {
+                assert(JS::Any(false), JS::Any(u"Expected argument [") + expected + JS::Any(u"] shouldn\'t be primitive. ") + message + JS::Any(u""));
+            }
+            result = compareArray(actual, expected);
+            if (result)             return;
+            format = compareArray[u"format"];
+            assert(JS::Any(false), JS::Any(u"Actual ") + format(actual) + JS::Any(u" and expected ") + format(expected) + JS::Any(u" should have the same contents. ") + message + JS::Any(u""));
+        }
+        return JS::Any();
+    }, 3, u"Anonymous"));
+    compareArray = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any a = arguments[u"0"];
+        JS::Any b = arguments[u"1"];
+
+        {
+            if (b[u"length"] strictNeq a[u"length"])
+            {
+                return JS::Any(false);
+            }
+            for (i = JS::Any(0); i < a[u"length"]; i++)
+            {
+                if (!assert[u"_isSameValue"](b[i], a[i]))
+                {
+                    return JS::Any(false);
+                }
+            }
+            return JS::Any(true);
+        }
+        return JS::Any();
+    }, 2, u"compareArray"));
+    compareArray[u"format"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any arrayLike = arguments[u"0"];
+
+        {
+            return JS::Any(u"[") + Array[u"prototype"][u"map"][u"call"](arrayLike, String)[u"join"](JS::Any(u", ")) + JS::Any(u"]");
+        }
+        return JS::Any();
+    }, 1, u"Anonymous"));
+    assert[u"_formatIdentityFreeValue"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any value = arguments[u"0"];
+
+        {
+            type = value strictEq JS::Any(nullptr) ? JS::Any(u"null") : typeOf value;
+            if (type strictEq JS::Any(u"string"))
+            {
+                return typeOf JSON strictNeq JS::Any(u"undefined") ? JSON[u"stringify"](value) : JS::Any(u"\"") + value + JS::Any(u"\"");
+            } else if (type strictEq JS::Any(u"bigint"))
+            {
+                return JS::Any(u"") + value + JS::Any(u"n");
+            } else if (type strictEq JS::Any(u"number"))
+            {
+                if (value strictEq JS::Any(0) && JS::Any(1) / value strictEq -Infinity)                 return JS::Any(u"-0");
+                return String(value);
+            } else if (type strictEq JS::Any(u"boolean") || type strictEq JS::Any(u"undefined") || type strictEq JS::Any(u"null"))
+            {
+                return String(value);
+            }
+        }
+        return JS::Any();
+    }, 1, u"formatIdentityFreeValue"));
+    assert[u"_toString"] = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any value = arguments[u"0"];
+
+        {
+            basic = assert[u"_formatIdentityFreeValue"](value);
+            if (basic)             return basic;
+            try
+            {
+                return String(value);
+            }
+             catch (JS::Any& err)
+            {
+                if (err[u"name"] strictEq JS::Any(u"TypeError"))
+                {
+                    return Object[u"prototype"][u"toString"][u"call"](value);
+                }
+                throw err;
+            }
+        }
+        return JS::Any();
+    }, 1, u"Anonymous"));
+    return 0;
+}

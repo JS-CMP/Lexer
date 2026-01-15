@@ -89,19 +89,28 @@ Expr::Ptr Identifier::parse(Parser& parser, Expr::Ptr expr) {
 }
 
 Expr::Ptr BinaryExpr::parse(Parser& parser, Expr::Ptr expr) {
-    Token opTok = parser.consume([](const Token& tok) {
-        return tok.type >= TK_ADD && tok.type < TK_QUAD_OP_LAST &&
-               !(tok.type == TK_NOT || tok.type == TK_INC || tok.type == TK_DEC);
-    }, "BinaryExpr", "Expected binary operator.");
-    if ((opTok.type == TK_ASSIGN ||
-         (opTok.type >= TK_ASSIGN_ADD && opTok.type <= TK_ASSIGN_BIT_XOR) ||
-         (opTok.type >= TK_ASSIGN_SAR && opTok.type <= TK_ASSIGN_SHL)) &&
-        dynamic_cast<Identifier*>(expr.get()) == nullptr) {
-        throw ParseError("[BinaryExpr] Invalid left-hand side in assignment at line " + std::to_string(opTok.line) + " col " + std::to_string(opTok.column) + ".");
+    Token opTok = parser.previous();
+    DEBUG_PARSER(parser.previous())
+    if (!(((opTok.type >= TK_ADD && opTok.type < TK_QUAD_OP_LAST) ||
+        (opTok.type == TK_COMMA || opTok.type == TK_INSTANCEOF)) &&
+          !(opTok.type == TK_NOT || opTok.type == TK_INC || opTok.type == TK_DEC))) {
+        throw ParseError("[BinaryExpr] Expected binary operator at line " + std::to_string(opTok.line) + " col " + std::to_string(opTok.column) + ".");
     }
-    Expr::Ptr right = parser.parseExpression();
+    Expr::Ptr right = parser.parseAssignment();
     return std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
 }
+
+Expr::Ptr AssignementExpr::parse(Parser& parser, Expr::Ptr expr) {
+    Token opTok = parser.previous();
+    if (!(opTok.type == TK_ASSIGN ||
+          (opTok.type >= TK_ASSIGN_ADD && opTok.type <= TK_ASSIGN_BIT_XOR) ||
+          (opTok.type >= TK_ASSIGN_SAR && opTok.type <= TK_ASSIGN_SHL))) {
+        throw ParseError("[AssignementExpr] Expected assignment operator at line " + std::to_string(opTok.line) + " col " + std::to_string(opTok.column) + ".");
+    }
+    Expr::Ptr right = parser.parseExpression();
+    return std::make_unique<AssignementExpr>(std::move(expr), opTok.value, std::move(right));
+}
+
 
 Expr::Ptr UnaryExpr::parse(Parser& parser, Expr::Ptr expr) {
     Token opTok = parser.consume([](const Token& tok) {
@@ -163,11 +172,19 @@ Expr::Ptr CallExpr::parse(Parser& parser, Expr::Ptr expr) {
     if (parser.previous().type != TK_LPAREN) {
         throw ParseError("Expected '(' after callee expression in CallExpr at line " + std::to_string(parser.peek().line) + " col " + std::to_string(parser.peek().column) + ".");
     }
+    std::cout << "Parsing CallExpr" << std::endl;
     std::vector<Expr::Ptr> arguments;
     if (!parser.check(TK_RPAREN)) {
         do {
+            DEBUG_PARSER(parser.peek())
+            if (parser.check(TK_RPAREN)) {
+                arguments.push_back(std::make_unique<Undefined>());
+                break;
+            }
             arguments.push_back(parser.parseAssignment());
         } while (parser.match(TK_COMMA));
+        std::cout << "END PArsing callexpr" << std::endl;
+        DEBUG_PARSER(parser.peek())
     }
     parser.consume(TK_RPAREN, "CallExpr", "Expected ')' after arguments.");
     return std::make_unique<CallExpr>(std::move(expr), std::move(arguments));
@@ -207,13 +224,17 @@ Stmt::Ptr BlockStmt::parse(Parser& parser) {
 
 Stmt::Ptr VarDecl::parse(Parser& parser) {
     parser.consume(TK_VAR, "VarDecl", "Expected 'var' keyword.");
-    Token nameTok = parser.consume(TK_IDENTIFIER, "VarDecl", "Expected variable name.");
-    Expr::Ptr init;
+    std::vector<std::string> names;
+    do {
+        Token nameTok = parser.consume(TK_IDENTIFIER, "VarDecl", "Expected variable name.");
+        names.push_back(nameTok.value);
+    } while (parser.match(TK_COMMA));
+    Expr::Ptr init = nullptr;
     if (parser.match(TK_ASSIGN)) {
         init = parser.parseExpression();
     }
     parser.expectSemicolon("VarDecl", "Expected ';' after variable declaration.");
-    return std::make_unique<VarDecl>(nameTok.value, std::move(init));
+    return std::make_unique<VarDecl>(names, std::move(init));
 }
 
 Stmt::Ptr ExpressionStmt::parse(Parser& parser) {
@@ -303,7 +324,7 @@ Stmt::Ptr ForInStmt::parse(Parser& parser) {
     Stmt::Ptr left;
     if (parser.match(TK_VAR)) {
         Token nameTok = parser.consume(TK_IDENTIFIER, "ForInStmt", "Expected variable name in for-in statement.");
-        left = std::make_unique<VarDecl>(nameTok.value, nullptr);
+        left = std::make_unique<VarDecl>(std::vector<std::string>({nameTok.value}), nullptr);
     } else {
         Expr::Ptr ptr = parser.parseLeftHandSide();
         left = std::make_unique<ExpressionStmt>(std::move(ptr));
@@ -340,6 +361,7 @@ Stmt::Ptr ReturnStmt::parse(Parser& parser) {
     if (parser.peek().type == TK_EOL || parser.match(TK_SEMICOLON)) {
         return std::make_unique<ReturnStmt>(nullptr);
     }
+
     Expr::Ptr argument = parser.parseExpression();
     parser.expectSemicolon("ReturnStmt", "Expected ';' after return statement.");
     return std::make_unique<ReturnStmt>(std::move(argument));

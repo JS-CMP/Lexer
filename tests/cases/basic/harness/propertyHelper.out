@@ -1,0 +1,345 @@
+#include "types/JsAny.hpp"
+#include "global/global.hpp"
+#include "types/objects/Types.hpp"
+#include "customOperators/CustomOperators.hpp"
+
+int main() {
+    JS::Any __isArray, __defineProperty, __getOwnPropertyDescriptor, __getOwnPropertyNames, __join, __push, __hasOwnProperty, __propertyIsEnumerable, nonIndexNumericPropertyName, verifyProperty, originalDesc, nameStr, names, i, failures, isConfigurable, isEnumerable, stringCheck, isSameValue, isWritable, unlikelyValue, newValue, hadValue, oldValue, writeSucceeded, verifyCallableProperty, value, verifyEqualTo, verifyWritable, verifyNotWritable, verifyEnumerable, verifyNotEnumerable, verifyConfigurable, verifyNotConfigurable, verifyPrimordialProperty, verifyPrimordialCallableProperty;
+    __isArray = Array[u"isArray"];
+    __defineProperty = Object[u"defineProperty"];
+    __getOwnPropertyDescriptor = Object[u"getOwnPropertyDescriptor"];
+    __getOwnPropertyNames = Object[u"getOwnPropertyNames"];
+    __join = Function[u"prototype"][u"call"][u"bind"](Array[u"prototype"][u"join"]);
+    __push = Function[u"prototype"][u"call"][u"bind"](Array[u"prototype"][u"push"]);
+    __hasOwnProperty = Function[u"prototype"][u"call"][u"bind"](Object[u"prototype"][u"hasOwnProperty"]);
+    __propertyIsEnumerable = Function[u"prototype"][u"call"][u"bind"](Object[u"prototype"][u"propertyIsEnumerable"]);
+    nonIndexNumericPropertyName = Math[u"pow"](JS::Any(2), JS::Any(32)) - JS::Any(1);
+    verifyProperty = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+        JS::Any desc = arguments[u"2"];
+        JS::Any options = arguments[u"3"];
+
+        {
+            assert(arguments[u"length"] > JS::Any(2), JS::Any(u"verifyProperty should receive at least 3 arguments: obj, name, and descriptor"));
+            originalDesc = __getOwnPropertyDescriptor(obj, name);
+            nameStr = String(name);
+            if (desc strictEq JS::Any())
+            {
+                assert[u"sameValue"](originalDesc, JS::Any(), JS::Any(u"obj[\'") + nameStr + JS::Any(u"\'] descriptor should be undefined"));
+                return JS::Any(true);
+            }
+            assert(__hasOwnProperty(obj, name), JS::Any(u"obj should have an own property ") + nameStr);
+            assert[u"notSameValue"](desc, JS::Any(nullptr), JS::Any(u"The desc argument should be an object or undefined, null"));
+            assert[u"sameValue"](typeOf desc, JS::Any(u"object"), JS::Any(u"The desc argument should be an object or undefined, ") + String(desc));
+            names = __getOwnPropertyNames(desc);
+            for (i = JS::Any(0); i < names[u"length"]; i++)
+            {
+                assert(names[i] strictEq JS::Any(u"value") || names[i] strictEq JS::Any(u"writable") || names[i] strictEq JS::Any(u"enumerable") || names[i] strictEq JS::Any(u"configurable") || names[i] strictEq JS::Any(u"get") || names[i] strictEq JS::Any(u"set"), JS::Any(u"Invalid descriptor field: ") + names[i], JS::Any());
+            }
+            failures = JS::Any(JS::InternalObject::create<JS::Array>(std::vector<JS::Any>{
+
+            }));
+            if (__hasOwnProperty(desc, JS::Any(u"value")))
+            {
+                if (!isSameValue(desc[u"value"], originalDesc[u"value"]))
+                {
+                    __push(failures, JS::Any(u"obj[\'") + nameStr + JS::Any(u"\'] descriptor value should be ") + desc[u"value"]);
+                }
+                if (!isSameValue(desc[u"value"], obj[name]))
+                {
+                    __push(failures, JS::Any(u"obj[\'") + nameStr + JS::Any(u"\'] value should be ") + desc[u"value"]);
+                }
+            }
+            if (__hasOwnProperty(desc, JS::Any(u"enumerable")) && desc[u"enumerable"] strictNeq JS::Any())
+            {
+                if (desc[u"enumerable"] strictNeq originalDesc[u"enumerable"] || desc[u"enumerable"] strictNeq isEnumerable(obj, name))
+                {
+                    __push(failures, JS::Any(u"obj[\'") + nameStr + JS::Any(u"\'] descriptor should ") + (desc[u"enumerable"] ? JS::Any(u"") : JS::Any(u"not ")) + JS::Any(u"be enumerable"));
+                }
+            }
+            if (__hasOwnProperty(desc, JS::Any(u"writable")) && desc[u"writable"] strictNeq JS::Any())
+            {
+                if (desc[u"writable"] strictNeq originalDesc[u"writable"] || desc[u"writable"] strictNeq isWritable(obj, name))
+                {
+                    __push(failures, JS::Any(u"obj[\'") + nameStr + JS::Any(u"\'] descriptor should ") + (desc[u"writable"] ? JS::Any(u"") : JS::Any(u"not ")) + JS::Any(u"be writable"));
+                }
+            }
+            if (__hasOwnProperty(desc, JS::Any(u"configurable")) && desc[u"configurable"] strictNeq JS::Any())
+            {
+                if (desc[u"configurable"] strictNeq originalDesc[u"configurable"] || desc[u"configurable"] strictNeq isConfigurable(obj, name))
+                {
+                    __push(failures, JS::Any(u"obj[\'") + nameStr + JS::Any(u"\'] descriptor should ") + (desc[u"configurable"] ? JS::Any(u"") : JS::Any(u"not ")) + JS::Any(u"be configurable"));
+                }
+            }
+            if (failures[u"length"])
+            {
+                assert(JS::Any(false), __join(failures, JS::Any(u"; ")));
+            }
+            if (options && options[u"restore"])
+            {
+                __defineProperty(obj, name, originalDesc);
+            }
+            return JS::Any(true);
+        }
+        return JS::Any();
+    }, 4, u"verifyProperty"));
+    isConfigurable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+
+        {
+            try
+            {
+                del obj[name];
+            }
+             catch (JS::Any& e)
+            {
+                if (!(e instanceof TypeError))
+                {
+                    throw NEW(Test262Error, JS::Any(u"Expected TypeError, got ") + e);
+                }
+            }
+            return !__hasOwnProperty(obj, name);
+        }
+        return JS::Any();
+    }, 2, u"isConfigurable"));
+    isEnumerable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+
+        {
+            stringCheck = JS::Any(false);
+            if (typeOf name strictEq JS::Any(u"string"))
+            {
+                {
+                    // for-in loop transpiled by JS_CMP not optimize for now
+                    JS::Any _js_cmp_keys0 = JS::Object::keys(Object, JS::Arguments::CreateArgumentsObject(std::vector<JS::Any>{obj}));
+                    size_t _js_cmp_keys_len0 = static_cast<size_t>(std::get<double>(_js_cmp_keys0[u"length"].getValue()));
+                    for (size_t _js_cmp_i0 = 0; _js_cmp_i0 < _js_cmp_keys_len0; _js_cmp_i0++)
+                    {
+                        JS::Any x = _js_cmp_keys0[std::to_string(_js_cmp_i0)];
+
+                        {
+                            if (x strictEq name)
+                            {
+                                stringCheck = JS::Any(true);
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else
+            {
+                stringCheck = JS::Any(true);
+            }
+            return stringCheck && __hasOwnProperty(obj, name) && __propertyIsEnumerable(obj, name);
+        }
+        return JS::Any();
+    }, 2, u"isEnumerable"));
+    isSameValue = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any a = arguments[u"0"];
+        JS::Any b = arguments[u"1"];
+
+        {
+            if (a strictEq JS::Any(0) && b strictEq JS::Any(0))             return JS::Any(1) / a strictEq JS::Any(1) / b;
+            if (a strictNeq a && b strictNeq b)             return JS::Any(true);
+            return a strictEq b;
+        }
+        return JS::Any();
+    }, 2, u"isSameValue"));
+    isWritable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+        JS::Any verifyProp = arguments[u"2"];
+        JS::Any value = arguments[u"3"];
+
+        {
+            unlikelyValue = __isArray(obj) && name strictEq JS::Any(u"length") ? nonIndexNumericPropertyName : JS::Any(u"unlikelyValue");
+            newValue = value || unlikelyValue;
+            hadValue = __hasOwnProperty(obj, name);
+            oldValue = obj[name];
+            if (arguments[u"length"] < JS::Any(4) && newValue strictEq oldValue)
+            {
+                newValue = newValue + JS::Any(u"2");
+            }
+            try
+            {
+                obj[name] = newValue;
+            }
+             catch (JS::Any& e)
+            {
+                if (!(e instanceof TypeError))
+                {
+                    throw NEW(Test262Error, JS::Any(u"Expected TypeError, got ") + e);
+                }
+            }
+            writeSucceeded = isSameValue(obj[verifyProp || name], newValue);
+            if (writeSucceeded)
+            {
+                if (hadValue)
+                {
+                    obj[name] = oldValue;
+                } else
+                {
+                    del obj[name];
+                }
+            }
+            return writeSucceeded;
+        }
+        return JS::Any();
+    }, 4, u"isWritable"));
+    verifyCallableProperty = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+        JS::Any functionName = arguments[u"2"];
+        JS::Any functionLength = arguments[u"3"];
+        JS::Any desc = arguments[u"4"];
+        JS::Any options = arguments[u"5"];
+
+        {
+            value = obj[name];
+            assert[u"sameValue"](typeOf value, JS::Any(u"function"), JS::Any(u"obj[\'") + String(name) + JS::Any(u"\'] descriptor should be a function"));
+            if (desc strictEq JS::Any())
+            {
+                desc = JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+                    {u"writable", JS::Any(true)},
+                    {u"enumerable", JS::Any(false)},
+                    {u"configurable", JS::Any(true)},
+                    {u"value", value}
+                }));
+            } else if (!__hasOwnProperty(desc, JS::Any(u"value")) && !__hasOwnProperty(desc, JS::Any(u"get")))
+            {
+                desc[u"value"] = value;
+            }
+            verifyProperty(obj, name, desc, options);
+            if (functionName strictEq JS::Any())
+            {
+                if (typeOf name strictEq JS::Any(u"symbol"))
+                {
+                    functionName = JS::Any(u"[") + name[u"description"] + JS::Any(u"]");
+                } else
+                {
+                    functionName = name;
+                }
+            }
+            verifyProperty(value, JS::Any(u"name"), JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+                {u"value", functionName},
+                {u"writable", JS::Any(false)},
+                {u"enumerable", JS::Any(false)},
+                {u"configurable", desc[u"configurable"]}
+            })), options);
+            verifyProperty(value, JS::Any(u"length"), JS::Any(JS::InternalObject::create<JS::Object>(std::unordered_map<std::u16string, JS::Any>{
+                {u"value", functionLength},
+                {u"writable", JS::Any(false)},
+                {u"enumerable", JS::Any(false)},
+                {u"configurable", desc[u"configurable"]}
+            })), options);
+        }
+        return JS::Any();
+    }, 6, u"verifyCallableProperty"));
+    verifyEqualTo = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+        JS::Any value = arguments[u"2"];
+
+        {
+            if (!isSameValue(obj[name], value))
+            {
+                throw NEW(Test262Error, JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to equal ") + value + JS::Any(u", actually ") + obj[name]);
+            }
+        }
+        return JS::Any();
+    }, 3, u"verifyEqualTo"));
+    verifyWritable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+        JS::Any verifyProp = arguments[u"2"];
+        JS::Any value = arguments[u"3"];
+
+        {
+            if (!verifyProp)
+            {
+                assert(__getOwnPropertyDescriptor(obj, name)[u"writable"], JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to have writable:true."));
+            }
+            if (!isWritable(obj, name, verifyProp, value))
+            {
+                throw NEW(Test262Error, JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to be writable, but was not."));
+            }
+        }
+        return JS::Any();
+    }, 4, u"verifyWritable"));
+    verifyNotWritable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+        JS::Any verifyProp = arguments[u"2"];
+        JS::Any value = arguments[u"3"];
+
+        {
+            if (!verifyProp)
+            {
+                assert(!__getOwnPropertyDescriptor(obj, name)[u"writable"], JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to have writable:false."));
+            }
+            if (isWritable(obj, name, verifyProp))
+            {
+                throw NEW(Test262Error, JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] NOT to be writable, but was."));
+            }
+        }
+        return JS::Any();
+    }, 4, u"verifyNotWritable"));
+    verifyEnumerable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+
+        {
+            assert(__getOwnPropertyDescriptor(obj, name)[u"enumerable"], JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to have enumerable:true."));
+            if (!isEnumerable(obj, name))
+            {
+                throw NEW(Test262Error, JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to be enumerable, but was not."));
+            }
+        }
+        return JS::Any();
+    }, 2, u"verifyEnumerable"));
+    verifyNotEnumerable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+
+        {
+            assert(!__getOwnPropertyDescriptor(obj, name)[u"enumerable"], JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to have enumerable:false."));
+            if (isEnumerable(obj, name))
+            {
+                throw NEW(Test262Error, JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] NOT to be enumerable, but was."));
+            }
+        }
+        return JS::Any();
+    }, 2, u"verifyNotEnumerable"));
+    verifyConfigurable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+
+        {
+            assert(__getOwnPropertyDescriptor(obj, name)[u"configurable"], JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to have configurable:true."));
+            if (!isConfigurable(obj, name))
+            {
+                throw NEW(Test262Error, JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to be configurable, but was not."));
+            }
+        }
+        return JS::Any();
+    }, 2, u"verifyConfigurable"));
+    verifyNotConfigurable = JS::Any(JS::InternalObject::create<JS::Function>([&](const JS::Any &thisArg, const JS::Any &arguments) -> JS::Any {
+        JS::Any obj = arguments[u"0"];
+        JS::Any name = arguments[u"1"];
+
+        {
+            assert(!__getOwnPropertyDescriptor(obj, name)[u"configurable"], JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] to have configurable:false."));
+            if (isConfigurable(obj, name))
+            {
+                throw NEW(Test262Error, JS::Any(u"Expected obj[") + String(name) + JS::Any(u"] NOT to be configurable, but was."));
+            }
+        }
+        return JS::Any();
+    }, 2, u"verifyNotConfigurable"));
+    verifyPrimordialProperty = verifyProperty;
+    verifyPrimordialCallableProperty = verifyCallableProperty;
+    return 0;
+}
