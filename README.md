@@ -2,14 +2,14 @@
 
 [![C++23](https://img.shields.io/badge/C%2B%2B-23-blue.svg)](https://en.cppreference.com/w/cpp/23)
 [![CMake](https://img.shields.io/badge/CMake-3.25%2B-blue.svg)](https://cmake.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-GNU-blue.svg)](LICENSE)
 [![ECMAScript](https://img.shields.io/badge/ECMAScript-5-orange.svg)](https://www.ecma-international.org/ecma-262/5.1/)
 
-## 🚀 JavaScript Tokenizer SDK for C++
+## JavaScript Tokenizer SDK for C++
 
 **JS-CMP Lexer** is a professional-grade JavaScript tokenizer SDK that converts ECMAScript 5 code into structured tokens for analysis, transformation, and compilation. Built in modern C++23, this SDK provides a robust foundation for JavaScript processing tools, transpilers, and code analysis applications.
 
-## 📦 Features
+## Features
 
 - **ECMAScript 5 Compliance**: Full support for ES5 syntax and semantics
 - **High Performance**: Optimized C++23 implementation for fast tokenization
@@ -20,7 +20,7 @@
 - **Cross-Platform**: Works on Linux, macOS, and Windows
 - **Header-Only Option**: Available as single-header library
 
-## 🎯 Use Cases
+## Use Cases
 
 Perfect for building:
 - JavaScript transpilers and compilers
@@ -31,7 +31,7 @@ Perfect for building:
 - Educational programming tools
 - Custom scripting engines
 
-## 📥 Installation
+## Installation
 
 ### As GitHub Submodule (Recommended)
 
@@ -70,7 +70,7 @@ cp -r include/ your_project/include/lexer
 #include "lexer/Tokenizer/Lexer.hpp"
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Basic Tokenization
 
@@ -125,7 +125,7 @@ int main() {
 }
 ```
 
-## 🔧 API Reference
+## API Reference
 
 ### Core Classes
 
@@ -173,7 +173,7 @@ if (token.type == Lexer::TokenType::IDENTIFIER) {
 }
 ```
 
-## 📚 Advanced Usage
+## Advanced Usage
 
 ### Error Handling
 
@@ -224,7 +224,7 @@ public:
 };
 ```
 
-## 🧪 Testing
+## Testing
 
 The SDK includes comprehensive unit tests using Google Test framework.
 
@@ -239,15 +239,15 @@ cmake --build build
 
 ### Test Coverage
 
-- ✅ Basic syntax (variables, functions, loops)
-- ✅ Complex expressions and operators
-- ✅ Object and array literals
-- ✅ Regular expressions
-- ✅ Error conditions and edge cases
-- ✅ Performance benchmarks
-- ✅ **Advanced Coverage Tracking**: Automatic test execution tracking
-- ✅ **Multiple Report Formats**: Console, Markdown, HTML, XML reports
-- ✅ **File-Level Coverage**: Detailed file-by-file test results
+- Basic syntax (variables, functions, loops)
+- Complex expressions and operators
+- Object and array literals
+- Regular expressions
+- Error conditions and edge cases
+- Performance benchmarks
+- **Advanced Coverage Tracking**: Automatic test execution tracking
+- **Multiple Report Formats**: Console, Markdown, HTML, XML reports
+- **File-Level Coverage**: Detailed file-by-file test results
 
 ### Coverage Reporting
 
@@ -268,16 +268,6 @@ This generates detailed coverage reports in `build/reports/` including:
 - HTML coverage report (when lcov/gcovr installed)
 - XML report for CI integration
 
-## 📊 Performance
-
-### Benchmark Results
-
-```
-Tokenization Speed: ~100,000 tokens/second
-Memory Usage: ~50KB per lexer instance
-Startup Time: <1ms
-```
-
 ### Optimization Tips
 
 1. **Reuse Lexer Instances**: Create lexer once, reuse for multiple files
@@ -285,7 +275,7 @@ Startup Time: <1ms
 3. **Streaming Mode**: Use `nextToken()` for memory-constrained environments
 4. **Pre-allocation**: Reserve vector space when expecting many tokens
 
-## 🔧 Integration Guide
+## Integration Guide
 
 ### CMake Integration
 
@@ -309,7 +299,7 @@ cmake -B build -DCMAKE_BUILD_TYPE=Debug
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr/local
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Lexer/
@@ -323,7 +313,7 @@ Lexer/
 └── README.md                 # This file
 ```
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please follow these guidelines:
 
@@ -344,11 +334,11 @@ cmake -B build -DBUILD_TESTS=ON
 cmake --build build
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-## 📬 Support
+## Support
 
 For questions, issues, or feature requests:
 
@@ -356,23 +346,7 @@ For questions, issues, or feature requests:
 - **Discussions**: https://github.com/JS-CMP/Lexer/discussions
 - **Email**: support@js-cmp.org
 
-## 🚀 Roadmap
-
-### Upcoming Features
-
-- [ ] ECMAScript 6+ token support
-- [ ] Enhanced error recovery
-- [ ] Source map generation
-- [ ] WebAssembly build target
-- [ ] Python bindings
-
-### Version History
-
-- **v1.0**: Initial release with ES5 support
-- **v1.1**: Performance optimizations
-- **v1.2**: Enhanced error handling
-
-## 📚 Additional Resources
+## Additional Resources
 
 - **ECMAScript 5 Specification**: https://www.ecma-international.org/ecma-262/5.1/
 - **C++23 Documentation**: https://en.cppreference.com/w/cpp/23
