@@ -46,7 +46,7 @@ EXPR(FunctionExpr, CTOR(name(std::move(name)), params(std::move(params)), body(s
 
 STMT(BlockStmt, CTOR(body(std::move(body))), std::vector<Stmt::Ptr> body)
 
-STMT(VarDecl, CTOR(names(std::move(names)), init(std::move(init))), std::vector<std::string> names, Expr::Ptr init)
+STMT(VarDecl, CTOR(name(std::move(name)), init(std::move(init))), std::string name, Expr::Ptr init)
 
 STMT(ExpressionStmt, CTOR(expression(std::move(expression))), Expr::Ptr expression)
 

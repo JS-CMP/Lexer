@@ -52,6 +52,10 @@ if(ENABLE_COVERAGE)
         add_compile_options(--coverage -fprofile-arcs -ftest-coverage)
         add_link_options(--coverage)
         
+        # Apply coverage flags to the main library as well
+        target_compile_options(${PROJECT_NAME} PRIVATE --coverage -fprofile-arcs -ftest-coverage)
+        target_link_options(${PROJECT_NAME} PRIVATE --coverage)
+        
         # Find coverage tools
         find_program(GCOV_PATH gcov)
         find_program(LCOV_PATH lcov)

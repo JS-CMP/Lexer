@@ -117,7 +117,7 @@ std::ostringstream& AssignementExpr::transpile(std::ostringstream& os, std::ostr
 
 std::ostringstream& UnaryExpr::transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const {
     static const std::unordered_map<std::string, std::string> opMap = {
-        {"typeof", "typeOf "}, {"delete", "del "}, {"void", "Void "},
+        {"typeof", "typeOf"}, {"delete", "del"}, {"void", "Void"},
     };
     if (op == "void")
         os << "(";
@@ -208,17 +208,9 @@ std::ostringstream& BlockStmt::transpile(std::ostringstream& os, std::ostringstr
 }
 
 std::ostringstream& VarDecl::transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const {
-    for (const auto& n : this->names) {
-        vars << n << ", ";
-    }
+    vars << name << ", ";
     if (init) {
-        os << std::string(indent, ' ');
-        for (size_t i = 0; i < this->names.size(); ++i) {
-            if (i > 0)
-                os << ", ";
-            os << this->names[i];
-        }
-        os << " = ";
+        os << std::string(indent, ' ') << name << " = ";
         init->transpile(os, vars, indent);
         os << ";\n";
         return os;
@@ -327,7 +319,7 @@ std::ostringstream& ForInStmt::transpile(std::ostringstream& os, std::ostringstr
     os << "\n" << std::string(indent + 4, ' ') << "{\n";
     VarDecl* varDecl;
     if ((varDecl = dynamic_cast<VarDecl*>(left.get()))) {
-        os << std::string(indent + 8, ' ') << "JS::Any " << varDecl->names[0];
+        os << std::string(indent + 8, ' ') << "JS::Any " << varDecl->name;
     } else {
         left->transpile(os, vars, indent + 8);
         // check if there is ;\n at the end and remove it

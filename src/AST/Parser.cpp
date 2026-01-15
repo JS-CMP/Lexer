@@ -155,7 +155,9 @@ Expr::Ptr Parser::parseUnary() {
 Expr::Ptr Parser::parseMultiplicative() {
     Expr::Ptr expr = parseUnary();
     while (match(TK_MUL) || match(TK_DIV) || match(TK_MOD)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseUnary();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -163,7 +165,9 @@ Expr::Ptr Parser::parseMultiplicative() {
 Expr::Ptr Parser::parseAdditive() {
     Expr::Ptr expr = parseMultiplicative();
     while (match(TK_ADD) || match(TK_SUB)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseMultiplicative();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -171,7 +175,9 @@ Expr::Ptr Parser::parseAdditive() {
 Expr::Ptr Parser::parseShift() {
     Expr::Ptr expr = parseAdditive();
     while (match(TK_SAR) || match(TK_SHL) || match(TK_SHR)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseAdditive();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -179,7 +185,9 @@ Expr::Ptr Parser::parseShift() {
 Expr::Ptr Parser::parseRelational() {
     Expr::Ptr expr = parseShift();
     while (match(TK_LT) || match(TK_GT) || match(TK_LTE) || match(TK_GTE) || match(TK_IN) || match(TK_INSTANCEOF)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseShift();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -187,7 +195,9 @@ Expr::Ptr Parser::parseRelational() {
 Expr::Ptr Parser::parseEquality() {
     Expr::Ptr expr = parseRelational();
     while (match(TK_EQ) || match(TK_NE) || match(TK_EQ_STRICT) || match(TK_NE_STRICT)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseRelational();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -195,7 +205,9 @@ Expr::Ptr Parser::parseEquality() {
 Expr::Ptr Parser::parseBitwiseAnd() {
     Expr::Ptr expr = parseEquality();
     while (match(TK_BIT_AND)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseEquality();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -203,7 +215,9 @@ Expr::Ptr Parser::parseBitwiseAnd() {
 Expr::Ptr Parser::parseBitwiseXor() {
     Expr::Ptr expr = parseBitwiseAnd();
     while (match(TK_BIT_XOR)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseBitwiseAnd();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -211,7 +225,9 @@ Expr::Ptr Parser::parseBitwiseXor() {
 Expr::Ptr Parser::parseBitwiseOr() {
     Expr::Ptr expr = parseBitwiseXor();
     while (match(TK_BIT_OR)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseBitwiseXor();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -219,7 +235,9 @@ Expr::Ptr Parser::parseBitwiseOr() {
 Expr::Ptr Parser::parseLogicalAnd() {
     Expr::Ptr expr = parseBitwiseOr();
     while (match(TK_LOGICAL_AND)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseBitwiseOr();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -227,7 +245,9 @@ Expr::Ptr Parser::parseLogicalAnd() {
 Expr::Ptr Parser::parseLogicalOr() {
     Expr::Ptr expr = parseLogicalAnd();
     while (match(TK_LOGICAL_OR)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseLogicalAnd();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -245,7 +265,9 @@ Expr::Ptr Parser::parseAssignment() {
     if (match(TK_ASSIGN) || match(TK_ASSIGN_ADD) || match(TK_ASSIGN_SUB) || match(TK_ASSIGN_MUL) ||
         match(TK_ASSIGN_DIV) || match(TK_ASSIGN_MOD) || match(TK_ASSIGN_BIT_AND) || match(TK_ASSIGN_BIT_OR) ||
         match(TK_ASSIGN_BIT_XOR) || match(TK_ASSIGN_SAR) || match(TK_ASSIGN_SHL) || match(TK_ASSIGN_SHR)) {
-        expr = AssignementExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseAssignment();
+        expr = std::make_unique<AssignementExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
@@ -253,14 +275,15 @@ Expr::Ptr Parser::parseAssignment() {
 Expr::Ptr Parser::parseComma() {
     Expr::Ptr expr = parseAssignment();
     while (match(TK_COMMA)) {
-        expr = BinaryExpr::parse(*this, std::move(expr));
+        Token opTok = previous();
+        Expr::Ptr right = parseAssignment();
+        expr = std::make_unique<BinaryExpr>(std::move(expr), opTok.value, std::move(right));
     }
     return expr;
 }
 
 Expr::Ptr Parser::parseExpression() {
-    Expr::Ptr expr = parseComma();
-    return expr;
+    return parseComma();
 }
 
 bool Parser::match(TokenType type, const std::string& lexme) {
