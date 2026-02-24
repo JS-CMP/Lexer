@@ -18,8 +18,7 @@ int main() {
         
         const result = greet("World");
         console.log(result);
-    )"
-    ";
+    )";
 
     std::cout << "=== Basic Tokenization Example ===" << std::endl;
     std::cout << "Input JavaScript code:" << std::endl;
