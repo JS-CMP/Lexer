@@ -1,10 +1,10 @@
 # JS-CMP Lexer SDK - API Reference
 
-## 📚 Complete API Documentation
+## Complete API Documentation
 
 This document provides detailed technical documentation for all classes, methods, and data structures in the JS-CMP Lexer SDK.
 
-## 🔧 Core Components
+## Core Components
 
 ### `Lexer::Lexer` Class
 
@@ -166,7 +166,7 @@ unsigned long column
 - **Type**: `unsigned long`
 - **Description**: Column number where token starts (1-based)
 
-## 🏷️ Token Types
+## Token Types
 
 The SDK supports comprehensive ECMAScript 5 token types:
 
@@ -396,7 +396,7 @@ try {
 3. **Pre-allocate token vectors** when using batch mode
 4. **Avoid unnecessary string copies** - work with token references
 
-## 🧪 Testing Utilities
+## Testing Utilities
 
 The SDK provides helper methods for testing:
 
@@ -413,7 +413,7 @@ Lexer::TokenType type = Lexer::Token::isKeyword("function");
 // Returns Lexer::TK_FUNCTION
 ```
 
-## 🔗 Integration Examples
+## Integration Examples
 
 ### CMake Integration
 
@@ -460,7 +460,7 @@ auto tokens = lexer.tokenize();
 - **Streaming mode** for large files or memory constraints
 - **Pre-allocate** when expecting many tokens
 
-## 🚀 Advanced Topics
+## Advanced Topics
 
 ### Custom Token Processing
 
@@ -556,7 +556,7 @@ while (true) {
 }
 ```
 
-## 📎 Appendix
+## Appendix
 
 ### Token Type Categories
 
