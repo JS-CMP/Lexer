@@ -38,7 +38,7 @@ jobs:
         ./build/JS_CMP_LEXER_test
 
     - name: Upload coverage reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-reports
         path: build/reports/
