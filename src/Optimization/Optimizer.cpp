@@ -21,15 +21,15 @@ void Optimizer::optimize(flag_t flags) {
 
 std::string Optimizer::transpile() const {
     std::ostringstream os;
-    std::ostringstream vars;
+    AST::Scope globalScope;
+    AST::TranspileContext ctx{&globalScope};
+
     for (const auto& stmt : ast) {
-        stmt->transpile(os, vars, 4);
+        stmt->transpile(os, ctx, 4);
     }
+
     std::stringstream main;
-    std::string varStr = vars.str();
-    if (!varStr.empty()) {
-        varStr = varStr.substr(0, varStr.size() - 2);
-    }
+    std::string varStr = globalScope.emitVars();
 
     main << "#include \"types/JsAny.hpp\"\n"
         << "#include \"global/global.hpp\"\n"
