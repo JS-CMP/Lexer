@@ -3,9 +3,37 @@
 #include <memory>
 #include <vector>
 #include <sstream>
+#include <unordered_set>
 
 namespace Lexer::AST {
 class Parser;
+
+struct Scope {
+    Scope* parent = nullptr;
+    std::unordered_set<std::string> vars;
+    std::vector<std::string> order;
+
+    bool declare(const std::string& name) {
+        if (vars.count(name)) return false;
+        vars.insert(name);
+        order.push_back(name);
+        return true;
+    }
+
+    std::string emitVars() const {
+        if (order.empty()) return "";
+        std::string result;
+        for (size_t i = 0; i < order.size(); i++) {
+            if (i > 0) result += ", ";
+            result += order[i];
+        }
+        return result;
+    }
+};
+
+struct TranspileContext {
+    Scope* currentScope = nullptr;
+};
 
 class Node {
 public:
@@ -13,7 +41,7 @@ public:
 
     virtual ~Node() = default;
     virtual void print(size_t indent = 0) const = 0;
-    virtual std::ostringstream& transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent = 0) const = 0;
+    virtual std::ostringstream& transpile(std::ostringstream& os, TranspileContext& ctx, size_t indent = 0) const = 0;
 };
 
 
@@ -43,7 +71,7 @@ public:
 public:\
     x() = default;\
     void print(size_t indent) const final;\
-    std::ostringstream& transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const final;\
+    std::ostringstream& transpile(std::ostringstream& os, TranspileContext& ctx, size_t indent) const final;\
     static Expr::Ptr parse(Parser& parser); \
 };
 
@@ -51,7 +79,7 @@ public:\
 public: \
     explicit x(__VA_ARGS__) : ctor {};\
     void print(size_t indent) const final;\
-    std::ostringstream& transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const final;\
+    std::ostringstream& transpile(std::ostringstream& os, TranspileContext& ctx, size_t indent) const final;\
     static Expr::Ptr parse(Parser& parser, Expr::Ptr expr = nullptr);\
     DECL(__VA_ARGS__)\
 };
@@ -60,7 +88,7 @@ public: \
 public:\
     x() = default;\
     void print(size_t indent) const final;\
-    std::ostringstream& transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const final;\
+    std::ostringstream& transpile(std::ostringstream& os, TranspileContext& ctx, size_t indent) const final;\
     static Stmt::Ptr parse(Parser& parser);\
 };
 
@@ -68,7 +96,7 @@ public:\
 public: \
     explicit x(__VA_ARGS__) : ctor {};\
     void print(size_t indent) const final;\
-    std::ostringstream& transpile(std::ostringstream& os, std::ostringstream& vars, size_t indent) const final;\
+    std::ostringstream& transpile(std::ostringstream& os, TranspileContext& ctx, size_t indent) const final;\
     static Stmt::Ptr parse(Parser& parser);\
     DECL(__VA_ARGS__)\
 };
